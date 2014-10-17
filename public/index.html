@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Untitled</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
+
+</head>
+<body>
+	<div id="map-canvas"></div>
+	<div class="container">
+		<audio src="Sounds/call_to_adventure.mp3" id="background"></audio>
+	 	<div class="sense-container">
+	 		<audio id="sonar-ping" src="Sounds/sonar.wav"></audio>
+	 		<button class="sense btn btn-danger btn-block">Locate</button>
+	 	</div>
+
+	 	
+	 	
+	 	<div class="modal fade" id="monster-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 		<div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			      </div>
+			      <div class="modal-body">
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			        <button type="button" class="btn btn-danger" data-dismiss="modal" id="fight">Fight!</button>
+			      </div>
+			    </div>
+			  </div>
+	 	</div>
+		
+		<audio src="Sounds/miss.wav" id="miss"></audio>
+		<audio src="Sounds/hit.wav" id="hit"></audio>
+		<audio src="Sounds/poof.wav" id="poof"></audio>
+		<audio src="Sounds/mistake_the_getaway.mp3" id="battle-music"></audio>
+		<div class="modal fade" id="battle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-content arena">
+				<div class="arena-back">
+					<!-- <div class="arena-body"> -->
+						<img src="Images/cityscape.png" class="backdrop">
+						<div>
+							<img  class="char" src="Images/girl.png" alt="">
+							<div class="pet">
+								<img src="Images/carbuncle.png">
+							</div>
+							<div class="pet-health">
+								<div class="health-nums">
+									<p></p>
+								</div>
+								<div class="health-container">
+									<div class="health"></div>
+								</div>
+							</div>
+							<div class="controls">
+							        <button type="button" id="attack">Attack</button>
+							        <button type="button" id="purify">Purify</button>
+							        <button type="button" id="run" data-dismiss="modal">Run</button>
+							</div>
+
+							<ul class="monster-list">
+								<li class="mon1 monster selected">
+									<img src="Images/arrow.png" alt="" class="selection">
+									<img src="Images/monster4.png">
+								</li>
+								<li class="mon2 monster">
+									<img src="Images/monster4.png">
+								</li>
+								<li class="mon3 monster">
+									<img src="Images/monster4.png">
+								</li>
+								<div class="monster-health">
+									<div class="health-nums">
+										<p></p>
+									</div>
+									<div class="health-container">
+										<div class="health"></div>
+									</div>
+								</div>
+							</ul>
+						</div>
+					<!-- </div> -->
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="fight-txt">
+		<audio src="Sounds/fight.mp3" id="fight-clip"></audio>
+		<div class="tlt">
+			<ul class="texts">
+				<li data-out-effect="fadeOutRightBig" data-in-reverse="true" data-out-reverse="true">Fight!</li>
+				<li data-in-effect="fadeInLeftBig"></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<script src="objects/world.js"></script>
+	<script src="objects/data.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="textillate.js"></script>
+	<script src="main.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+	<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANe9MgEBXi5wQPgfKygQHuy3K5S7RHUmo"></script> -->
+
+</body>
+</html>

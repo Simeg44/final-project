@@ -1,0 +1,201 @@
+ html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+
+    }
+
+.sense-container {
+	width: 20%;
+	position: absolute;
+	top: 90%;
+	left: 40%;
+}
+
+@-webkit-keyframes glowing {
+  0% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+  50% { background-color: #ff8482; -webkit-box-shadow: 0 0 10px #ff8482; }
+  100% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+}
+
+.glow {
+  -webkit-animation: glowing 1500ms infinite;
+}
+
+span {
+  color: #a8a3a3;
+}
+
+.monster-img {
+  float: right;
+  margin-top: -4em;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.modal-header {
+  font-family: 'Rock Salt', cursive;
+}
+
+.descrip p {
+  margin-left: 1em;
+  font-size: 12px;
+  margin-top: 1em;
+}
+
+.fight-txt {
+  position: fixed;
+  background: rgba(0,0,0,0.9);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: none;
+  color: white;
+}
+
+.tlt {
+  margin-top: 25%;
+  margin-left: 35%;
+  font-size: 8em;
+  font-family: 'Rock Salt', cursive;
+}
+
+.texts {
+  list-style: none;
+}
+
+.arena {
+  max-width: 80%;
+  margin: auto;
+  margin-top: 10%;
+  height: 50%;
+}
+
+/*.arena-body {
+  position: relative;
+}
+
+/*.arena-body button {
+  margin-top: 100%;
+}*/
+
+.arena-back {
+  width: 100%;
+  position: relative;
+  height: 85%;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100%;
+  margin-top: -10px;
+}
+
+.char {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+}
+
+.pet {
+  position: absolute;
+  right: 20%;
+  bottom: 30%;
+}
+
+.controls {
+  margin-top: -20px;
+}
+
+.monster {
+  position: absolute;
+}
+
+.mon3 {
+  bottom: 0;
+  left: 10%;
+}
+
+.mon2 {
+  bottom: 10%;
+  left: 20%;
+}
+
+.mon1 {
+  bottom: 23%;
+  left: 8%;
+}
+
+.selection {
+  position: absolute;
+  margin-top: -38px;
+  margin-left: 18px;
+  z-index: 1;
+}
+
+.monster-list {
+  list-style: none;
+}
+
+.hit {
+  position: absolute;
+  margin-top: -100%;
+}
+
+.health-container {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.health {
+  background-color: #c90000;
+  width: 100%;
+  height: 100%;
+}
+
+.monster-health {
+  position: absolute;
+  bottom: 58%;
+  left: 11%;
+}
+
+.health-container {
+  width: 8em;
+  height: 1em;
+}
+
+.miss-text {
+  position: absolute;
+  color: white;
+  top: 30%;
+  left: 80%;
+  font-family: "Shadows into Light", cursive;
+}
+
+.pet-health {
+  right: 10%;
+  position: absolute;
+  top: 15%;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -5%;
+  right: 10%;
+  font-family: "shadows into light", cursive;
+  font-size: 20px;
+}
+
+.controls button {
+  background: #4da1a5;
+  border: 3px solid black;
+  border-radius: 5px;
+}
+
+
+
+
+

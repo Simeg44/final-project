@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div#map-canvas
+	div.container
+		audio#background(src="/Sounds/call_to_adventure.mp3")
+			div.sense-container
+				audio#sonar-ping(src="/Sounds/sonar.wav")
+				button.sense.btn.btn-danger.btn-block Locate
+
+	script.
+		var monsterData = !{JSON.stringify(data)}
+	script(src="world.js")
+	script(src="main.js")
