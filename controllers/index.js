@@ -1,4 +1,4 @@
-var data = require("./models/tempDatabase.js")
+var data = require("../models/tempDatabase.js")
 
 var indexController = {
 	index: function(req, res) {

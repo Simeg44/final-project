@@ -4,11 +4,12 @@ block content
 	div#map-canvas
 	div.container
 		audio#background(src="/Sounds/call_to_adventure.mp3")
-			div.sense-container
-				audio#sonar-ping(src="/Sounds/sonar.wav")
-				button.sense.btn.btn-danger.btn-block Locate
+		div.sense-container
+			audio#sonar-ping(src="/Sounds/sonar.wav")
+			button.sense.btn.btn-danger.btn-block Locate
 
+block scripts
 	script.
 		var monsterData = !{JSON.stringify(data)}
-	script(src="world.js")
-	script(src="main.js")
+	script(src="/world.js")
+	script(src="/main.js")

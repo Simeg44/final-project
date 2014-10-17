@@ -29,7 +29,7 @@ var Kakoi = function(health, strength, defense, speed, location, creates) {
 	this.strength = strength || 20;			// number
 	this.defense = defense || 40;
 	this.speed = speed || .8;			// speed
-	this.location = location;	// location coordinates
+	this.location = location || "none";	// location coordinates
 	this.creates = creates || "none";		// array of Doroi born from this
 }
 
@@ -38,7 +38,7 @@ var Kakoi = function(health, strength, defense, speed, location, creates) {
 ////////////////////
 
 
-var Metus = function() {
+var Metus = function(health, strength, defense, speed, location, creates) {
 	Kakoi.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "metus";				// string
@@ -50,11 +50,11 @@ var Metus = function() {
 Metus.prototype = new Kakoi();
 Metus.prototype.constructor = Metus;
 
-var Nemesis = function() {
+var Nemesis = function(health, strength, defense, speed, location, creates) {
 	Kakoi.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "nemesis";				// string
-	this.heath = 500;					// overrides health
+	this.health = 500;					// overrides health
 	this.strength = 65;					// overrides strength
 	this.image = "Images/kakoi.png";	// image file
 	this.known = false;					// bool
@@ -62,11 +62,11 @@ var Nemesis = function() {
 Nemesis.prototype = new Kakoi();
 Nemesis.prototype.constructor = Nemesis;
 
-var Tenebrae = function() {
+var Tenebrae = function(health, strength, defense, speed, location, creates) {
 	Kakoi.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "tenebrae";				// string
-	this.heath = 650;					// overrides health
+	this.health = 650;					// overrides health
 	this.strength = 70;					// overrides strength
 	this.defense = 60;					// overrides defense
 	this.speed = .7;					// overrides speed
@@ -76,11 +76,11 @@ var Tenebrae = function() {
 Tenebrae.prototype = new Kakoi();
 Tenebrae.prototype.constructor = Tenebrae;
 
-var Fraus = function() {
+var Fraus = function(health, strength, defense, speed, location, creates) {
 	Kakoi.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "fraus";				// string
-	this.heath = 350;					// overrides health
+	this.health = 350;					// overrides health
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
 	this.speed = .9;					// overrides speed
@@ -91,11 +91,11 @@ Fraus.prototype = new Kakoi();
 Fraus.prototype.constructor = Fraus;
 
 // Object containing all the breed constructors
-var Breed = {
-	"metus" = Metus,
-	"nemesis" = Nemesis,
-	"tenebrae" = Tenebrae,
-	"fraus" = Fraus
+var breed = {
+	"metus": Metus,
+	"nemesis": Nemesis,
+	"tenebrae": Tenebrae,
+	"fraus": Fraus
 };
 
 ///////////////

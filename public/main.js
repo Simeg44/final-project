@@ -18,9 +18,12 @@ var setPlayerPos = function(pos, map) {
 }
 
 var defineMonsters = function() {
-	var monsters = monsterData.map(function(item)) {
-		return new Breed[item[i].breed]; 
-	}
+	console.log("working");
+	var monsters = monsterData.map(function(item) {
+		var monster = new breed[item.breed]; 
+		monster.location = item.location;
+		return monster;
+	});
 	return monsters;
 }
 
@@ -477,7 +480,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	  		var infoWindow = new google.maps.InfoWindow({
 	  			map: map,
 	  			position: pos,
-	  			content: "Location"
+	  			content: ""
 	  		});
 
 	  		map.setCenter(pos);
