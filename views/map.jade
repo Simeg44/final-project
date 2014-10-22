@@ -7,9 +7,39 @@ block content
 		div.sense-container
 			audio#sonar-ping(src="/Sounds/sonar.wav")
 			button.sense.btn.btn-danger.btn-block Locate
+	
+		div.modal.fade#monster-info(tabindex="-1" role="dialog" aria-labelledby="myModalLabl" aria-hidden="true")
+			div.modal-dialog
+				div.modal-content
+					div.modal-header
+					div.modal-body
+					div.modal-footer
+						button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+						button.btn.btn-danger#fight(type="button" data-dismiss="modal") Fight!
+
+		div.fight-txt
+			audio#fight-clip(src="Sounds/fight.mp3")
+			div.tlt
+				ul.texts
+					li(data-out-effect="fadeOutRightBig" data-in-reverse="true" data-out-reverse="true") Fight!
+					li(data-in-effect="fadeInLeftBig")
+
+		audio#miss(src="Sounds/miss.wav")
+		audio#hit(src="Sounds/hit.wav")
+		audio#poof(src="Sounds/poof.wav")
+		audio#battle-music(src="Sounds/mistake_the_getaway.mp3")
+
+		div.modal-content.arena
+			div.arena-back
+				img.backdrop(src="Images/cityscape.png")
+
 
 block scripts
+	//- script.
+	//- 	var monsterData = data;
 	script.
-		var monsterData = !{JSON.stringify(data)}
+		var monsterData = !{JSON.stringify(monster)}
+	script.
+		var playerData = !{JSON.stringify(player)}
 	script(src="/world.js")
 	script(src="/main.js")

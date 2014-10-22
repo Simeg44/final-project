@@ -3,6 +3,7 @@
 var markers = [];
 var iterator = 0;
 var turn = true;
+var playerPet;
 
 // Set player position and marker
 var setPlayerPos = function(pos, map) {
@@ -15,16 +16,28 @@ var setPlayerPos = function(pos, map) {
 		animation: google.maps.Animation.BOUNCE,
 		title: "Player"
 	});
+	playerData.location = pos;
+
+	definePlayerPet();
+	console.log(playerPet);
 }
 
 var defineMonsters = function() {
-	console.log("working");
 	var monsters = monsterData.map(function(item) {
 		var monster = new breed[item.breed]; 
 		monster.location = item.location;
 		return monster;
 	});
 	return monsters;
+}
+
+var definePlayerPet = function() {
+	playerPet = new blessing[playerData.pet.name];
+
+	// Set client pet data to match server data
+	playerPet.level = playerData.pet.level
+	playerPet.currentHealth = playerData.pet.currentHealth;
+
 }
 
 // Fill the map with monsters
@@ -35,8 +48,9 @@ var populate = function(map) {
 	var localMonsters = defineMonsters();
 	console.log(localMonsters);
 
+
 	if (markers.length > 0) {
-		for (var j = 0; j < monsters.length; j++) {
+		for (var j = 0; j < localmonsters.length; j++) {
 			markers[j].setMap(null);
 		}
 		markers = [];
@@ -44,16 +58,54 @@ var populate = function(map) {
 
     // Calls monster.render to link the object to 
     // markers and add them to the map
-    for (var i = 0; i < monsters.length; i++) {
+    for (var i = 0; i < localMonsters.length; i++) {
     	setTimeout(function() {
-    		monsters[iterator].render(map);
+    		localMonsters[iterator].render(map);
     	}, i * 200);
     }
 }
 
+// Appends modal filled with selected monster info
+// into the DOM
+var appendMonsterInfo = function (monster) {
+	if (monster.known === false) {
+		var name = $("<h3 class='monster-name'>???</h3><img class='monster-img' src='Images/duck_shadow.jpg'>");
+		var local = $("<p class='monster-pref'>Location: <span>???</span></p>");
+		var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>???</span></p><p>Rare: <span>???</span></p></div>");
+	}
+	else {
+		var name = $("<h3 class='monster-name'>" + monster.name + "</h3><img class='monster-img' src='" + monster.image + "'>");
+
+		if (monster.pref === "none") {
+			var local = $("<p class='monster-pref'>Location: <span>No Preference</span></p>");
+		}
+		else {
+			var local = $("<p class='monster-pref>Location: " + monster.pref + "</p>");
+		} 
+
+		if (monster.creates.length < 1) {
+			var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>None</span></p><p>Rare: <span>None</span></p></div>");
+		}
+		else if (monster.creates.length === 1) {
+			local = local + $("<p><strong>Purifies To: <strong><p>Common: " + monster.creates[0] 
+				+ "</p><p>Rare: <span>None</span></p></p>");
+		}
+		else {
+			local = local + $("<p><strong>Purifies To: <strong><p>Common: " + monster.creates[0] 
+				+ "</p><p>Rare: " + monster.creates[1] + "</p></p>");
+		}
+	}
+
+	$("#monster-info").find(".modal-header").append(name);
+	$("#monster-info").find(".modal-body").append(local).append(descrip);
+
+	$("#monster-info").modal('show');
+}
+
 
 Kakoi.prototype.render = function(map) {
-	var monster = monsters[iterator];
+	// var monster = localMonsters[iterator];
+	// var monster = this;
 
 	// Redundant monster death animation change ??
 /*	if (monster.health <= 0) {
@@ -70,15 +122,10 @@ Kakoi.prototype.render = function(map) {
 	}*/
 	var image = {
 		url: "Images/icon_angry.png",
-		 // This marker is 20 pixels wide by 32 pixels tall.
-    	// size: new google.maps.Size(20, 32),
-    	// The origin for this image is 0,0.
-    	// origin: new google.maps.Point(0,0),
-    	// The anchor for this image is the base of the flagpole at 0,32.
     	anchor: new google.maps.Point(38, 38)
     }
 
-	var myLatLng = new google.maps.LatLng(monster.location[0], monster.location[1]);
+	var myLatLng = new google.maps.LatLng(this.location[0], this.location[1]);
 	var marker = (new google.maps.Marker({
 		position: myLatLng,
 	    map: map,
@@ -88,40 +135,11 @@ Kakoi.prototype.render = function(map) {
 	markers.push(marker);
 	this.marker = marker;
 
+	var monster = this;
 	google.maps.event.addListener(marker, 'click', function(event) {
 
-		if (monster.known === false) {
-			var name = $("<h3 class='monster-name'>???</h3><img class='monster-img' src='Images/duck_shadow.jpg'>");
-			var local = $("<p class='monster-pref'>Location: <span>???</span></p>");
-			var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>???</span></p><p>Rare: <span>???</span></p></div>");
-		}
-		else {
-			var name = $("<h3 class='monster-name'>" + monster.name + "</h3><img class='monster-img' src='" + monster.image + "'>");
-
-			if (monster.pref === "none") {
-				var local = $("<p class='monster-pref'>Location: <span>No Preference</span></p>");
-			}
-			else {
-				var local = $("<p class='monster-pref>Location: " + monster.pref + "</p>");
-			} 
-
-			if (monster.creates === "none") {
-				var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>None</span></p><p>Rare: <span>None</span></p></div>");
-			}
-			else if (monster.creates.length === 1) {
-				local = local + $("<p><strong>Purifies To: <strong><p>Common: " + monster.creates[0] 
-					+ "</p><p>Rare: <span>None</span></p></p>");
-			}
-			else {
-				local = local + $("<p><strong>Purifies To: <strong><p>Common: " + monster.creates[0] 
-					+ "</p><p>Rare: " + monster.creates[1] + "</p></p>");
-			}
-		}
-
-		$("#monster-info").find(".modal-header").append(name);
-		$("#monster-info").find(".modal-body").append(local).append(descrip);
-
-		$("#monster-info").modal('show');
+		appendMonsterInfo(monster);
+		// var playerPet = definePlayerPet();
 
 		$("#fight").on("click", function() {
 			console.log(monster);
@@ -129,13 +147,13 @@ Kakoi.prototype.render = function(map) {
 			audio.play();
 
 			var monsterHealth = monster.health;
-			var fighterHealth = player1.attacker.currentHealth;
+			var fighterHealth = playerPet.currentHealth;
 			$(".health-nums").empty();
 			$(".monster-list").find(".health-nums").append("<p>" + monsterHealth + "/" + monster.health + "</p>");
 			$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" 
-				+ player1.attacker.health + "</p>");
+				+ playerPet.health + "</p>");
 			console.log(monsterHealth);
-			player1.attack(monster, monsterHealth, fighterHealth);
+			playerPet.attack(monster, monsterHealth, fighterHealth);
 			
 			var background = document.getElementById("background");
 			background.pause();
@@ -165,7 +183,7 @@ Kakoi.prototype.render = function(map) {
 	iterator++;
 }
 
-Player.prototype.attack = function(monster, monsterHealth, fighterHealth) {
+Blessing.prototype.attack = function(monster, monsterHealth, fighterHealth) {
 	$("#battle").find("button").removeAttr("disabled");
 			
 	$(".monster-list").off("click").on("click", "li", function() {
@@ -194,8 +212,8 @@ Player.prototype.attack = function(monster, monsterHealth, fighterHealth) {
 		var missAudio = document.getElementById("miss");
 		
 		// if monster is hit change animations and health
-		if (player1.attacker.speed+Math.random() > .9) {
-			monsterHealth = monsterHealth - player1.attacker.strength;
+		if (playerPet.speed+Math.random() > .9) {
+			monsterHealth = monsterHealth - playerPet.strength;
 			$(".monster-list").find(".selected").append(hit); // show hit animation on selected monster
 			hitAudio.play();
 
@@ -216,7 +234,7 @@ Player.prototype.attack = function(monster, monsterHealth, fighterHealth) {
 					setTimeout(function() {
 						$(".monster-health").find(".health").css("width", "100%");
 						monster.health = monsterHealth;	 // permanently change monster health
-						player1.attacker.currentHealth = fighterHealth; // permanently change pet health
+						playerPet.currentHealth = fighterHealth; // permanently change pet health
 						console.log(monster.health);
 						monster.marker.setIcon("Images/cloud.png");
 						var poof = document.getElementById("poof");
@@ -274,22 +292,22 @@ Kakoi.prototype.battle = function(monsterHealth, fighterHealth) {
 			console.log("pistis:", fighterHealth);
 
 			$(".pet-health").find(".health-nums").empty();
-			$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" + player1.attacker.health + "</p>");
-			var healthLeft = (fighterHealth/player1.attacker.health) * 100;
+			$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" + playerPet.health + "</p>");
+			var healthLeft = (fighterHealth/playerPet.health) * 100;
 			$(".pet-health").find(".health").css("width", healthLeft + "%");
 
 			setTimeout(function() {
 				$(".arena").find(".hit").remove();
 			}, 200);
 
-			player1.attack(this, monsterHealth, fighterHealth);
+			playerPet.attack(this, monsterHealth, fighterHealth);
 
 		}
 		else {
 			missAudio.play();
 			// $(".arena").prepend("<p class='action'>Miss!</p>");
 			console.log("monster misses");
-			player1.attack(this, monsterHealth, fighterHealth);
+			playerPet.attack(this, monsterHealth, fighterHealth);
 		}
 	}).bind(this), 1000);
 	
@@ -523,7 +541,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var lat = event.latLng.lat();
 		var lng = event.latLng.lng();
 		console.log(lat, lng);
-		console.log(monsters[0]);
+		console.log(localMonsters[0]);
 	})
 
 	//Associate the styled map with the MapTypeId and set it to display.

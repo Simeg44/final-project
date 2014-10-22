@@ -1,5 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require("mongoose");
+
+// controllers
 var indexController = require('./controllers/index.js');
 
 var app = express();
@@ -7,6 +10,8 @@ app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
+
+mongoose.connect("mongodb://localhost/pandoran");
 
 // app.get('/', indexController.index);
 

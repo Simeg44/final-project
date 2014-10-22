@@ -8,20 +8,21 @@ var World = function(kakoi, percentage, zone) {
 	this.zone = zone;				// players zone by city or state
 }
 
-var Player = function(name, level, pets, attacker, location){
+var Player = function(name, level, pet, location){
 	this.name = name; 			// string
 	this.level = level; 		// number
-	this.pets = pets || [];  	// array
-	this.attacker = attacker || "none"		// equiped pet
+	// this.pets = pets || [];  	// array
+	this.pet = pet || "none"		// equiped pet
 	this.location = location 	// string of coordinantes?
 }
 
-var Blessing = function(name, image, health, currentHealth, origin){
+var Blessing = function(name, level, currentHealth){
 	this.name = name;			// string
-	this.image = image; 		// image file?
-	this.health = health;		// number
+	this.level = level || 1;
+	// this.image = image; 		// image file?
+	// this.health = health;		// number
 	this.currentHealth = currentHealth;		// current health number
-	this.origin	= origin;		// kakoi object
+	// this.origin	= origin;		// kakoi object
 }
 
 var Kakoi = function(health, strength, defense, speed, location, creates) {
@@ -30,7 +31,7 @@ var Kakoi = function(health, strength, defense, speed, location, creates) {
 	this.defense = defense || 40;
 	this.speed = speed || .8;			// speed
 	this.location = location || "none";	// location coordinates
-	this.creates = creates || "none";		// array of Doroi born from this
+	this.creates = creates || [];		// array of Doroi born from this
 }
 
 ////////////////////
@@ -98,9 +99,30 @@ var breed = {
 	"fraus": Fraus
 };
 
+
 ///////////////
 // Blessings //
 ///////////////
+
+var Pistis = function(name, health, currentHealth, strength, speed) {
+	Blessing.call(this, name, health, currentHealth);
+
+	this.name = "pistis";
+	this.role = "attack";			// string (necessary?)
+	this.strength = strength || 200;
+	this.speed = speed || 200;
+	this.image = "Images/carbuncle.png";
+}
+Pistis.prototype = new Blessing();
+Pistis.prototype.constructor = Pistis;
+
+// Object containing all the blessing constructors
+var blessing = {
+	"pistis": Pistis
+}
+
+
+
 
 
 var Finder = function(name, image, health, currentHealth, origin, known, role, tracking) {
