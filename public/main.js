@@ -1,9 +1,18 @@
 
+//////////////////////
+// Global Variables //
+//////////////////////
+
 // array of monster markers
 var markers = [];
 var iterator = 0;
 var turn = true;
 var playerPet;
+
+
+///////////////
+// Functions //
+///////////////
 
 // Set player position and marker
 var setPlayerPos = function(pos, map) {
@@ -102,6 +111,49 @@ var appendMonsterInfo = function (monster) {
 	$("#monster-info").modal('show');
 }
 
+// Enter fight mode 
+var enterBattle = function (monster) {
+
+	console.log(monster);
+	var audio = document.getElementById("battle-music");
+	audio.play();
+
+	var monsterHealth = monster.health;
+	var fighterHealth = playerPet.currentHealth;
+	$(".health-nums").empty();
+	$(".monster-list").find(".health-nums").append("<p>" + monsterHealth + "/" + monster.health + "</p>");
+	$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" 
+		+ playerPet.health + "</p>");
+	console.log(monsterHealth);
+	playerPet.attack(monster, monsterHealth, fighterHealth);
+	
+	var background = document.getElementById("background");
+	background.pause();
+	background.currentTime = 0;
+	$(".fight-txt").show();
+	$(".tlt").textillate("start");
+	$(".tlt").textillate ({
+		selector: ".texts",
+		minDisplayTime: 0,
+	});
+	var audio = document.getElementById("fight-clip")
+	audio.play();
+
+	setTimeout(function() {
+		$(".fight-txt").hide();
+		$(".tlt").textillate("stop");
+
+		$("#battle").modal("show");
+		// var audio = document.getElementById("battle-music");
+		// audio.play();
+	}, 2500);
+}
+
+
+////////////////
+// Prototypes //
+////////////////
+
 
 Kakoi.prototype.render = function(map) {
 	// var monster = localMonsters[iterator];
@@ -142,40 +194,7 @@ Kakoi.prototype.render = function(map) {
 		// var playerPet = definePlayerPet();
 
 		$("#fight").on("click", function() {
-			console.log(monster);
-			var audio = document.getElementById("battle-music");
-			audio.play();
-
-			var monsterHealth = monster.health;
-			var fighterHealth = playerPet.currentHealth;
-			$(".health-nums").empty();
-			$(".monster-list").find(".health-nums").append("<p>" + monsterHealth + "/" + monster.health + "</p>");
-			$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" 
-				+ playerPet.health + "</p>");
-			console.log(monsterHealth);
-			playerPet.attack(monster, monsterHealth, fighterHealth);
-			
-			var background = document.getElementById("background");
-			background.pause();
-			background.currentTime = 0;
-			$(".fight-txt").show();
-			$(".tlt").textillate("start");
-			$(".tlt").textillate ({
-				selector: ".texts",
-				minDisplayTime: 0,
-			});
-			var audio = document.getElementById("fight-clip")
-			audio.play();
-
-			setTimeout(function() {
-				$(".fight-txt").hide();
-				$(".tlt").textillate("stop");
-
-				$("#battle").modal("show");
-				// var audio = document.getElementById("battle-music");
-				// audio.play();
-			}, 2500);
-		
+			enterBattle(monster);
 		})
 
 	})

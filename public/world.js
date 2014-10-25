@@ -16,6 +16,7 @@ var Player = function(name, level, pet, location){
 	this.location = location 	// string of coordinantes?
 }
 
+// Pet that is chosen by player at start of game
 var Blessing = function(name, level, currentHealth){
 	this.name = name;			// string
 	this.level = level || 1;
@@ -25,6 +26,7 @@ var Blessing = function(name, level, currentHealth){
 	// this.origin	= origin;		// kakoi object
 }
 
+// Monsters/evils in world
 var Kakoi = function(health, strength, defense, speed, location, creates) {
 	this.health = health || 300;			// number
 	this.strength = strength || 20;			// number
