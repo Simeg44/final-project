@@ -13,6 +13,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 mongoose.connect("mongodb://localhost/pandoran");
 
+// Seed the database
+// 	Since I don't need to save access
+// 	to each seed (as in they just execute),
+// 	then I dont need to store them in
+// 	a variable
+require("./models/seeds/monsterSeed.js");
+
 app.get('/', indexController.index);
 
 // Going to google map screen
