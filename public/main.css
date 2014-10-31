@@ -195,7 +195,17 @@ span {
   border-radius: 5px;
 }
 
+.title {
+  font-family: "Kelly Slab";
+  color: white;
+  font-size: 5em;
+}
 
-
-
+.title-background {
+  background: black;
+  text-align: center;
+  margin-top: 10em;
+  height: 25em;
+  -webkit-transform: perspective(300);
+}
 

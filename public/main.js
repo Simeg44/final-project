@@ -338,144 +338,107 @@ Kakoi.prototype.battle = function(monsterHealth, fighterHealth) {
 
 $(document).on('ready', function() {
   
+	
+
 	var map;
 
 	var background = document.getElementById("background");
 	background.play();
 
 	var styles = [
-    {
-        "featureType": "water",
-        "stylers": [
-            {"color": "#021019"}
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "stylers": [
-            {"color": "#08304b"}
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            {"color": "#0c4152" },
-            {"lightness": 5}
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {"color": "#000000"}
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {"color": "#0b434f"},
-            {"lightness": 25}
-        ]
-    },
-    {
-        "featureType": "road.arterial",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {"color": "#000000"}
-        ]
-    },
-    {
-        "featureType": "road.arterial",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {"color": "#0b3d51"},
-            {"lightness": 16}
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "elementType": "geometry",
-        "stylers": [
-            {"color": "#000000"}
-        ]
-    },
-    {
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {"color": "#ffffff"}
-        ]
-    },
-    {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-            {"color": "#000000"},
-            {"lightness": 13}
-        ]
-    },
-    {
-        "featureType": "transit",
-        "stylers": [
-            {"color": "#146474"}
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {"color": "#000000"}
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {"color": "#144b53"},
-            {"lightness": 14},
-            {"weight": 1.4}
-        ]
-    }
-];
-	/*
-	var styles = [
-  {
-    "stylers": [
-      { "saturation": -81 }
-    ]
-  },{
-    "featureType": "road.local",
-    "stylers": [
-      { "lightness": -17 },
-      { "hue": "#ff00b2" },
-      { "saturation": 29 }
-    ]
-  },{
-    "featureType": "road",
-    "elementType": "labels",
-    "stylers": [
-      { "visibility": "on" },
-      { "lightness": 32 }
-    ]
-  },{
-    "elementType": "labels",
-    "stylers": [
-      { "lightness": 16 }
-    ]
-  },{
-    "featureType": "road.highway",
-    "stylers": [
-      { "saturation": -37 },
-      { "hue": "#ff00d4" }
-    ]
-  },{
-    "featureType": "water",
-    "stylers": [
-      { "saturation": 50 },
-      { "hue": "#0022ff" }
-    ]
-  }
-];*/
+	    {
+	        "featureType": "water",
+	        "stylers": [
+	            {"color": "#021019"}
+	        ]
+	    },
+	    {
+	        "featureType": "landscape",
+	        "stylers": [
+	            {"color": "#08304b"}
+	        ]
+	    },
+	    {
+	        "featureType": "poi",
+	        "elementType": "geometry",
+	        "stylers": [
+	            {"color": "#0c4152" },
+	            {"lightness": 5}
+	        ]
+	    },
+	    {
+	        "featureType": "road.highway",
+	        "elementType": "geometry.fill",
+	        "stylers": [
+	            {"color": "#000000"}
+	        ]
+	    },
+	    {
+	        "featureType": "road.highway",
+	        "elementType": "geometry.stroke",
+	        "stylers": [
+	            {"color": "#0b434f"},
+	            {"lightness": 25}
+	        ]
+	    },
+	    {
+	        "featureType": "road.arterial",
+	        "elementType": "geometry.fill",
+	        "stylers": [
+	            {"color": "#000000"}
+	        ]
+	    },
+	    {
+	        "featureType": "road.arterial",
+	        "elementType": "geometry.stroke",
+	        "stylers": [
+	            {"color": "#0b3d51"},
+	            {"lightness": 16}
+	        ]
+	    },
+	    {
+	        "featureType": "road.local",
+	        "elementType": "geometry",
+	        "stylers": [
+	            {"color": "#000000"}
+	        ]
+	    },
+	    {
+	        "elementType": "labels.text.fill",
+	        "stylers": [
+	            {"color": "#ffffff"}
+	        ]
+	    },
+	    {
+	        "elementType": "labels.text.stroke",
+	        "stylers": [
+	            {"color": "#000000"},
+	            {"lightness": 13}
+	        ]
+	    },
+	    {
+	        "featureType": "transit",
+	        "stylers": [
+	            {"color": "#146474"}
+	        ]
+	    },
+	    {
+	        "featureType": "administrative",
+	        "elementType": "geometry.fill",
+	        "stylers": [
+	            {"color": "#000000"}
+	        ]
+	    },
+	    {
+	        "featureType": "administrative",
+	        "elementType": "geometry.stroke",
+	        "stylers": [
+	            {"color": "#144b53"},
+	            {"lightness": 14},
+	            {"weight": 1.4}
+	        ]
+	    }
+	];
 
 	// Create a new StyledMapType object, passing it the array of styles,
   	// as well as the name to be displayed on the map type control.

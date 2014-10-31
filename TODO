@@ -1,0 +1,16 @@
+Coding:
+  ☐ Move data rendering to client side
+  ☐ Fill database with randomly generated monsters
+  ☐ Create regions where monsters can spawn
+      ☐ Create circle overlays on google maps
+  ☐ Change fight modal
+  ☐ add vulnerability states to monsters
+  ☐ Login Page
+    ☐ spinning p
+  ☐ Load monsters based on user's geolocation
+  ☐ Inventory page
+Art:
+  ☐ Login page
+      ☐ doroi side
+      ☐ kakoi side
+      ☐ background

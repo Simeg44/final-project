@@ -13,10 +13,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 mongoose.connect("mongodb://localhost/pandoran");
 
-// app.get('/', indexController.index);
+app.get('/', indexController.index);
 
 // Going to google map screen
-app.get("/", indexController.mapContent);
+app.get("/map", indexController.mapContent);
 
 var port = process.env.PORT || 6591;
 var server = app.listen(port, function() {
