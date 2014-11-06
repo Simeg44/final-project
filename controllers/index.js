@@ -7,20 +7,16 @@ var Player = require("../models/player.js");
 
 var indexController = {
 	index: function(req, res) {
-		res.render('index');
+		Player.find({}, function(err, playerResults) {
+			res.render('index', {
+				player: playerResults
+			});
+		})
+		
 	},
 	
-	mapContent: function(req, res) {
-
-		// Eventually make player name match users request
-		Player.findOne({name: "Meg"}, function(err, playerResults) {
-			Monster.find({}, function(err, monsterResults) {
-				res.render("map", {
-					monster: monsterResults,
-					player: playerResults
-				});
-			});	
-		})
+	opening: function(req, res) {
+		res.render("opening")
 	}
 };
 

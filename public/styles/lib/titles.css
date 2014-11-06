@@ -1,0 +1,52 @@
+.title {
+  font-family: "Kelly Slab";
+  position: absolute;
+  right: 10%;
+  font-size: 5em;
+}
+
+
+.title-background {
+  background-image: url("/Images/girl_sketch.png");
+  background-size: cover;
+  border: 3px solid black;
+  text-align: center;
+  /*margin-top: 10em;*/
+  height: 32em;
+}
+
+.title-btn {
+	margin: 10px;
+}
+
+.opening-quote {
+  position: fixed;
+  background: rgba(0,0,0,1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  color: white;
+}
+
+.tlt-quote {
+  margin-top: 25%;
+  margin-left: 35%;
+  font-size: 1em;
+  font-family: 'Rock Salt', cursive;
+}
+
+.title-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.options {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+}

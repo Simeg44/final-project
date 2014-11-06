@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 
 // controllers
 var indexController = require('./controllers/index.js');
+var mapController = require("./controllers/map.js")
 
 var app = express();
 app.set('view engine', 'jade');
@@ -21,9 +22,10 @@ mongoose.connect("mongodb://localhost/pandoran");
 require("./models/seeds/monsterSeed.js");
 
 app.get('/', indexController.index);
+app.get("/opening", indexController.opening);
 
 // Going to google map screen
-app.get("/map", indexController.mapContent);
+app.get("/worldMap/:id", mapController.mapContent);
 
 var port = process.env.PORT || 6591;
 var server = app.listen(port, function() {

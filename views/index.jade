@@ -2,10 +2,23 @@ extends layout
 
 block content
 	.container
-		.title-background.col-md-6.col-md-offset-3
+		.opening-quote
+			.tlt-quote
+				ul.texts
+					li(data-in-effect="fadeIn" data-out-effect="fadeOut" data-out-shuffle="true") Good and evil are entertwined like a rope.
+					li(data-out-effect="fadeOut" data-out-shuffle="true")
+		.title-background.col-md-12.col-lg-8.col-lg-offset-2
 			h1.title#light-title Title
+			#options.options
+				.new-game.title-btn
+					a.btn.btn-default#new-game-btn(href="/opening") New Game
+				.continue.title-btn
+					button.btn.btn-default#continue-btn Continue
+			#player-options.options
 
 
 block scripts
+	script.
+		var playerData = !{JSON.stringify(player)}
 	script(src="/title-screen.js")
 	

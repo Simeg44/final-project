@@ -16,7 +16,7 @@ var playerPet;
 
 // Set player position and marker
 var setPlayerPos = function(pos, map) {
-	var image = "Images/sparkle.png";
+	var image = "/Images/sparkle.png";
 
 	var marker = new google.maps.Marker({
 		position: pos,
@@ -78,7 +78,7 @@ var populate = function(map) {
 // into the DOM
 var appendMonsterInfo = function (monster) {
 	if (monster.known === false) {
-		var name = $("<h3 class='monster-name'>???</h3><img class='monster-img' src='Images/duck_shadow.jpg'>");
+		var name = $("<h3 class='monster-name'>???</h3><img class='monster-img' src='/Images/duck_shadow.jpg'>");
 		var local = $("<p class='monster-pref'>Location: <span>???</span></p>");
 		var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>???</span></p><p>Rare: <span>???</span></p></div>");
 	}
@@ -118,24 +118,30 @@ var enterBattle = function (monster) {
 	var audio = document.getElementById("battle-music");
 	audio.play();
 
-	var monsterHealth = monster.health;
+	/*var monsterHealth = monster.health;
 	var fighterHealth = playerPet.currentHealth;
 	$(".health-nums").empty();
 	$(".monster-list").find(".health-nums").append("<p>" + monsterHealth + "/" + monster.health + "</p>");
 	$(".pet-health").find(".health-nums").append("<p>" + fighterHealth + "/" 
 		+ playerPet.health + "</p>");
 	console.log(monsterHealth);
-	playerPet.attack(monster, monsterHealth, fighterHealth);
+	playerPet.attack(monster, monsterHealth, fighterHealth);*/
 	
+	// Pauses map background music and resets it to the
+	// start of the song
 	var background = document.getElementById("background");
 	background.pause();
 	background.currentTime = 0;
+
+	// Animates the "Fight!" text
 	$(".fight-txt").show();
 	$(".tlt").textillate("start");
 	$(".tlt").textillate ({
 		selector: ".texts",
 		minDisplayTime: 0,
 	});
+
+	// Plays fight screen music
 	var audio = document.getElementById("fight-clip")
 	audio.play();
 
@@ -144,8 +150,6 @@ var enterBattle = function (monster) {
 		$(".tlt").textillate("stop");
 
 		$("#battle").modal("show");
-		// var audio = document.getElementById("battle-music");
-		// audio.play();
 	}, 2500);
 }
 
@@ -173,7 +177,7 @@ Kakoi.prototype.render = function(map) {
 		}));
 	}*/
 	var image = {
-		url: "Images/icon_angry.png",
+		url: "/Images/icon_angry.png",
     	anchor: new google.maps.Point(38, 38)
     }
 
@@ -215,18 +219,18 @@ Blessing.prototype.attack = function(monster, monsterHealth, fighterHealth) {
 		
 	});
 
-	var audio = document.getElementById("battle-music");
-	var background = document.getElementById("background");
-	$("#run").off("click").on("click", function() {
-		audio.pause();
-		audio.currentTime = 0;
-		background.play();
-	})
+	// var audio = document.getElementById("battle-music");
+	// var background = document.getElementById("background");
+	// // $("#run").off("click").on("click", function() {
+	// // 	audio.pause();
+	// // 	audio.currentTime = 0;
+	// // 	background.play();
+	// // })
 
 	console.log("adding attack");
 
 	$("#attack").off("click").on("click", function() {
-		var hit = $("<img class='hit' src='Images/hit.png'>");
+		var hit = $("<img class='hit' src='/Images/hit.png'>");
 		var hitAudio = document.getElementById("hit");
 		var missAudio = document.getElementById("miss");
 		
@@ -343,6 +347,10 @@ $(document).on('ready', function() {
 	var map;
 
 	var background = document.getElementById("background");
+	background.addEventListener('ended', function() {
+	    this.currentTime = 0;
+	    this.play();
+	}, false);
 	background.play();
 
 	var styles = [
@@ -455,11 +463,11 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	function initialize() {
 		var mapOptions = {
 			zoom: 15,
-			zoomControl: false,
-			draggable: false,
+			zoomControl: true,
+			draggable: true,
 			scaleControl: false,
 			disableDefaultUI: true,
-			scrollwheel: false,
+			scrollwheel: true,
 
 		     // Include the MapTypeId to add to the map type control
 		    mapTypeControlOptions: {
@@ -518,6 +526,30 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	}
 
+	// Construct a circle for each value in city map
+	// with an area based on its population
+	for (var city in citymap) {
+		var populationOptions = {
+			strokeColor: "#ff0000",
+			strokeOpacity: 0.8,
+			strokeWeight: 2,
+			fillColor: "#ff0000",
+			fillOpacity: 0.35,
+			map: map,
+			center: citymap[city].center,
+			radius: Math.sqrt(citymap[city].population)*10
+		};
+		// Add circle for this city to the map
+		cityCircle = new google.maps.Circle(populationOptions);
+	}
+
+	var rectangle = new google.maps.Rectangle({
+		strokeColor: "#ff0000",
+		strokeOpacity: 0.3,
+		strokeWeight: 2,
+		map: map,
+		bounds: denverArea.bounds
+	});
 
 	google.maps.event.addListener(map, 'click', function(event) {
 		var lat = event.latLng.lat();
@@ -558,8 +590,18 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		$(this).find(".modal-body").empty();
 	})
 
+	// Stops fight music and plays map music whenever
+	// the modal is closed
+	$('#battle').on('hidden.bs.modal', function (e) {
+		var background = document.getElementById("background");
+		var fight = document.getElementById("battle-music");
 
-	$("#fight").on("click", function() {
+		background.play();
+		fight.pause();
+		fight.currentTime = 0;
+	})
+
+	$("#battle").on("click", function() {
 		
 	})
 

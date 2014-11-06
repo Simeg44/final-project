@@ -1,5 +1,22 @@
 var mongoose = require("mongoose");
 var Monster = require("../monster.js");
+var _ = require("underscore");
+
+// Array of breeds to choose from 
+var breeds = ["metus", "nemesis", "fraus", "tenebrae"];
+
+// Returns a set of random coordinantes within
+// the circle of given center and radius
+function randomCoor(lat,lng, pop)
+{
+    var theta = Math.random()*((2*Math.PI) + 1);
+    var radius = Math.random()*(Math.sqrt(103166)*.0001);
+
+    var x = radius * Math.cos(theta) + lat;
+    var y = radius * Math.sin(theta) + lng;
+
+    return [x, y];
+}
 
 // Prefill the database with information
 Monster.find({}, function (err, results) {
@@ -7,49 +24,16 @@ Monster.find({}, function (err, results) {
 	// documents already...
 	if (results.length === 0){
 		// If the collection is empty, fill it in
-		
-		
+		console.log("seeding monsters");
 
-		var backInBlack = new Music({
-			title: "Back in Black",
-			artist: "AC DC",
-			numberOfCharactersInLyrics: 101,
-			bandMembers: [
-				{
-					name: "Angus Young",
-					instrument: "Guitar"
-				},
-				{
-					name: "Malcolm Young",
-					instrument: "Guitar"
-				},
-				{
-					name: "Brian Johnson",
-					instrument: "Voice"
-				}
-			]
-		});
-		backInBlack.save();
+		// seed Boulder monsters
+		for (var i = 0; i < 40; i ++) {
 
-		var menahMenah = new Music({
-			title: "Menah Menah",
-			artist: "Muppets",
-			numberOfCharactersInLyrics: 30,
-			bandMembers: [
-				{
-					name: "Animal",
-					instrument: "Drums!!"
-				},
-				{
-					name: "Swedish Chef",
-					instrument: "Bork Bork Bork"
-				},
-				{
-					name: "Beaker",
-					instrument: "Meep Meep"
-				}
-			]
-		});
-		menahMenah.save();
+			var monster = new Monster({
+				breed: _.sample(breeds),
+				location: randomCoor(40.024603, -105.254139)
+			});
+			monster.save();
+		}
 	}
 });

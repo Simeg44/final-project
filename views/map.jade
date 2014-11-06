@@ -18,28 +18,37 @@ block content
 						button.btn.btn-danger#fight(type="button" data-dismiss="modal") Fight!
 
 		div.fight-txt
-			audio#fight-clip(src="Sounds/fight.mp3")
-			div.tlt
+			audio#fight-clip(src="/Sounds/fight.mp3")
+			div.tlt.fight-style
 				ul.texts
 					li(data-out-effect="fadeOutRightBig" data-in-reverse="true" data-out-reverse="true") Fight!
 					li(data-in-effect="fadeInLeftBig")
 
-		audio#miss(src="Sounds/miss.wav")
-		audio#hit(src="Sounds/hit.wav")
-		audio#poof(src="Sounds/poof.wav")
-		audio#battle-music(src="Sounds/mistake_the_getaway.mp3")
+		audio#miss(src="/Sounds/miss.wav")
+		audio#hit(src="/Sounds/hit.wav")
+		audio#poof(src="/Sounds/poof.wav")
+		audio#battle-music(src="/Sounds/mistake_the_getaway.mp3")
 
-		div.modal-content.arena
-			div.arena-back
-				img.backdrop(src="Images/cityscape.png")
+		div.modal.fade#battle(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+			div.modal-content.arena
+				div.arena-back
+					//- img.backdrop(src="/Images/edo_street.gif")
+					div.monster
+						img(src="/Images/monster.png")
+					div.pet
+						img(src="/Images/pet.png")
+
+					div.controls
+						button.btn.btn-default#attack Attack
+						button.btn.btn-default#purify Purify
+						button.btn.btn-default#run(data-dismiss="modal") Run
 
 
 block scripts
-	//- script.
-	//- 	var monsterData = data;
 	script.
 		var monsterData = !{JSON.stringify(monster)}
 	script.
 		var playerData = !{JSON.stringify(player)}
 	script(src="/world.js")
+	script(src="/scripts/mapoverlay.js")
 	script(src="/main.js")
