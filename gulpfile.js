@@ -8,19 +8,19 @@ var minifycss = require("gulp-minify-css");
 
 
 var paths = {
-	// scripts: "public/scripts/lib/**/*.js",
-	// scriptsDest: "public/scripts",
+	scripts: "public/scripts/lib/**/*.js",
+	scriptsDest: "public/scripts",
 	styles: "public/styles/lib/**/*.css",
 	stylesDest: "public/styles"
 };
 
-/*gulp.task("scripts", function() {
-	gulp.src(paths.scripts)
-		.pipe(concat("main.js"))
-		.pipe(uglify())
-		.pipe(gulp.dest(paths.scriptsDest))
+gulp.task("scripts", function() {
+	return gulp.src(paths.scripts)
+		// .pipe(concat("main.js"))
+		// .pipe(uglify())
+		// .pipe(gulp.dest(paths.scriptsDest))
 		.pipe(livereload({ auto: false }))
-});*/
+});
 
 gulp.task("styles", function() {
 	return gulp.src(paths.styles)
@@ -36,7 +36,7 @@ gulp.task("styles", function() {
 gulp.task("watch", function(){
 	// starts livereload server
 	livereload.listen();
-	// gulp.watch(paths.scripts, ["scripts"]);
+	gulp.watch(paths.scripts, ["scripts"]);
 	gulp.watch(paths.styles, ["styles"]);
 })
 

@@ -127,11 +127,12 @@ span {
 
 .hit {
   position: absolute;
-  margin-top: -100%;
+  width: 30%;
+  /*margin-top: -100%;*/
 }
 
 .health-container {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 5px;
 }
 
@@ -145,6 +146,7 @@ span {
   position: absolute;
   bottom: 58%;
   left: 11%;
+  color: white;
 }
 
 .health-container {
@@ -164,6 +166,7 @@ span {
   right: 10%;
   position: absolute;
   top: 15%;
+  color: white;
 }
 
 .controls {
@@ -179,6 +182,24 @@ span {
   background: #4da1a5;
   border: 3px solid black;
   border-radius: 5px;
+}
+
+.map-loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: white;
+}
+
+.monster-thumb {
+  width: 30%;
+  float: right;
+}
+
+.monster-thumb img {
+  width: 50%;
 }
 .title {
   font-family: "Kelly Slab";

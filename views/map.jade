@@ -1,25 +1,29 @@
 extends layout
 
 block content
-	div#map-canvas
-	div.container
+	.map-loading
+		.loading-content
+			img(src="/Images/fallingelf.gif")
+			p Loading...
+	#map-canvas
+	.container
 		audio#background(src="/Sounds/call_to_adventure.mp3")
-		div.sense-container
+		.sense-container
 			audio#sonar-ping(src="/Sounds/sonar.wav")
 			button.sense.btn.btn-danger.btn-block Locate
 	
-		div.modal.fade#monster-info(tabindex="-1" role="dialog" aria-labelledby="myModalLabl" aria-hidden="true")
-			div.modal-dialog
-				div.modal-content
-					div.modal-header
-					div.modal-body
-					div.modal-footer
+		.modal.fade#monster-info(tabindex="-1" role="dialog" aria-labelledby="myModalLabl" aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					.modal-header
+					.modal-body
+					.modal-footer
 						button.btn.btn-default(type="button" data-dismiss="modal") Cancel
 						button.btn.btn-danger#fight(type="button" data-dismiss="modal") Fight!
 
-		div.fight-txt
+		.fight-txt
 			audio#fight-clip(src="/Sounds/fight.mp3")
-			div.tlt.fight-style
+			.tlt.fight-style
 				ul.texts
 					li(data-out-effect="fadeOutRightBig" data-in-reverse="true" data-out-reverse="true") Fight!
 					li(data-in-effect="fadeInLeftBig")
@@ -29,16 +33,27 @@ block content
 		audio#poof(src="/Sounds/poof.wav")
 		audio#battle-music(src="/Sounds/mistake_the_getaway.mp3")
 
-		div.modal.fade#battle(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-			div.modal-content.arena
-				div.arena-back
+		.modal.fade#battle(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+			.modal-content.arena
+				.arena-back
 					//- img.backdrop(src="/Images/edo_street.gif")
-					div.monster
-						img(src="/Images/monster.png")
-					div.pet
-						img(src="/Images/pet.png")
-
-					div.controls
+					.monster
+						.monster-img
+						//- img(src="/Images/monster.png")
+						.monster-health
+							.health-nums
+								p
+							.health-container
+								.health
+					.pet
+						.pet-img
+						//- img(src="/Images/pet.png")
+						.pet-health
+							.health-nums
+								p
+							.health-container
+								.health
+					.controls
 						button.btn.btn-default#attack Attack
 						button.btn.btn-default#purify Purify
 						button.btn.btn-default#run(data-dismiss="modal") Run
@@ -51,4 +66,4 @@ block scripts
 		var playerData = !{JSON.stringify(player)}
 	script(src="/world.js")
 	script(src="/scripts/mapoverlay.js")
-	script(src="/main.js")
+	script(src="/scripts/main.js")
