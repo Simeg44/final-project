@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var Monster = mongoose.Schema({
 	breed: String,
-	location: [Number]
+	location: {lat: Number, lng: Number}
 });
 
 module.exports = mongoose.model("monster", Monster)

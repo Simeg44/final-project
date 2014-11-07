@@ -23,8 +23,12 @@ var mapController = {
 		var lat = +req.query.lat;
 		var lng = +req.query.lng;
 		console.log("coor:", [lat, lng]);
-		Monster.find({ location : { $near : [lat, lng], $maxDistance: 0.10 }}, function(err, results) {
+		Monster.find({ location : { $near: {
+			$geometry: {type: "Point", coordinates: [lng, lat]},
+			$maxDistance: 3000 
+		}}}, function(err, results) {
 			console.log("results:", results);
+			console.log("err:", err);
 			res.send(results);
 		});
 	}

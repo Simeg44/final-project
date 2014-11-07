@@ -32,22 +32,20 @@ var setPlayerPos = function(pos, map) {
 	console.log(playerPet);
 }
 
-var defineMonsters = function(map) {
+var defineMonsters = function(map, onComplete) {
 
 	console.log("center:", map.getCenter());
 	var lat = map.getCenter().k;
 	var lng = map.getCenter().B;
-	console.log("coor:", [lng, lat]);
-	$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
-		console.log("response:", responseData);
-	})
 
-	var monsters = monsterData.map(function(item) {
-		var monster = new breed[item.breed]; 
-		monster.location = item.location;
-		return monster;
-	});
-	return monsters;
+	$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
+		var monsters = responseData.map(function(item) {
+			var monster = new breed[item.breed]; 
+			monster.location = item.location;
+			return monster;
+		});
+		onComplete(monsters);
+	})
 }
 
 var definePlayerPet = function() {
@@ -63,40 +61,37 @@ var definePlayerPet = function() {
 // Fill the map with monsters
 var populate = function(map) {
 
-
-
 	// Convert monsterData from database into
 	// front-end constructor classes
-	var localMonsters = defineMonsters(map);
-	console.log(localMonsters);
-
-
-	if (markers.length > 0) {
-		for (var j = 0; j < localmonsters.length; j++) {
-			markers[j].setMap(null);
+	defineMonsters(map, function(monsters){
+		if (markers.length > 0) {
+			for (var j = 0; j < monsters.length; j++) {
+				markers[j].setMap(null);
+			}
+			markers = [];
 		}
-		markers = [];
-	}
 
-    // Calls monster.render to link the object to 
-    // markers and add them to the map
-    for (var i = 0; i < localMonsters.length; i++) {
-    	setTimeout(function() {
-    		localMonsters[iterator].render(map);
-    	}, i * 200);
-    }
+	    // Calls monster.render to link the object to 
+	    // markers and add them to the map
+	    for (var i = 0; i < monsters.length; i++) {
+	    	setTimeout(function() {
+	    		monsters[iterator].render(map);
+	    	}, i * 200);
+	    }
+	});
+	
 }
 
 // Appends modal filled with selected monster info
 // into the DOM
 var appendMonsterInfo = function (monster) {
 	if (monster.known === false) {
-		var name = $("<h3 class='monster-name'>???</h3><img class='monster-img' src='/Images/duck_shadow.jpg'>");
+		var name = $("<h3 class='monster-name'>???</h3><img class='monster-mini-img' src='/Images/duck_shadow.jpg'>");
 		var local = $("<p class='monster-pref'>Location: <span>???</span></p>");
 		var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>???</span></p><p>Rare: <span>???</span></p></div>");
 	}
 	else {
-		var name = $("<h3 class='monster-name'>" + monster.name + "</h3><div class='monster-thumb'><img class='monster-img' src='" + monster.image + "'></div>");
+		var name = $("<h3 class='monster-name'>" + monster.name + "</h3><div class='monster-thumb'><img class='monster-mini-img' src='" + monster.image + "'></div>");
 
 		if (monster.pref === "none") {
 			var local = $("<p class='monster-pref'>Location: <span>No Preference</span></p>");
@@ -185,8 +180,9 @@ var attack = function() {
 	// if monster is hit change animations and health
 	if (playerPet.speed+Math.random() > .9) {
 		currentMonster.health = currentMonster.health - playerPet.strength;
-		$(".monster").prepend(hit);
-		// $(".monster-list").find(".selected").append(hit); // show hit animation on selected monster
+
+		// Shake animation
+		TweenLite.fromTo(".monster-img", 0.5, {x:-2}, {x:2, ease:RoughEase.ease.config({strength:8, points:20, template:Linear.easeNone, randomize:false}) , clearProps:"x"})
 		hitAudio.play();
 
 		setTimeout(function() {
@@ -194,10 +190,24 @@ var attack = function() {
 
 			// monster defeated
 			if (currentMonster.health <= 0) {
-				$("#battle").modal("hide");
-				// $(".monster-health").find(".health-nums").empty();
-				// $(".monster-img").empty();
-				// $(".pet-img").empty();
+				$(".symbol").css("display", "block");
+				$(".symbol").append("<div class='add-gesture'><img src='/Images/unistroke.png'></div>");
+
+				$('.add-gesture').gesture(onGesture);
+    
+			    function onGesture(result) {
+			      console.log(result.Name, result.Score);
+			      if (result.Name === "triangle") {
+			      	console.log("success");
+
+
+			      }
+			      else {
+			      	console.log("miss");
+			      }
+			    }
+
+				// $("#battle").modal("hide");
 				var image = "/Images/icon_shuai.png";
 				currentMonster.monster.marker.setIcon(image);
 
@@ -230,7 +240,11 @@ var attack = function() {
 	// player misses monster
 	else {
 		missAudio.play();
-		$(".monster").find(".selected").prepend("<p class='miss-text'>Miss!</p>");
+
+		// Miss animation
+		TweenLite.to(".pet-img", 1, {xPercent: 20});
+		TweenLite.to(".pet-img", 0.5, {xPercent: 0, delay:1});
+
 		console.log("player misses");
 		currentMonster.monster.attack();
 
@@ -254,7 +268,7 @@ Kakoi.prototype.render = function(map) {
     	anchor: new google.maps.Point(38, 38)
     }
 
-	var myLatLng = new google.maps.LatLng(this.location[0], this.location[1]);
+	var myLatLng = new google.maps.LatLng(this.location.lng, this.location.lat);
 	var marker = (new google.maps.Marker({
 		position: myLatLng,
 	    map: map,
@@ -291,7 +305,10 @@ Kakoi.prototype.attack = function() {
 		if (this.speed+Math.random() > 1) {
 			hitAudio.play();
 			console.log(hit);
-			// $(".arena").find(".pet").append(hit);
+
+			// Shake screen if player is hit
+			TweenLite.fromTo(".pet-img", 0.5, {x:-2}, {x:2, ease:RoughEase.ease.config({strength:8, points:20, template:Linear.easeNone, randomize:false}) , clearProps:"x"})
+			
 			playerPet.currentHealth = playerPet.currentHealth - this.strength;
 			console.log("pistis:", playerPet.currentHealth);
 
@@ -300,9 +317,6 @@ Kakoi.prototype.attack = function() {
 			var healthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
 			$(".pet-health").find(".health").css("width", healthLeft + "%");
 
-			setTimeout(function() {
-				$(".arena").find(".hit").remove();
-			}, 200);
 
 			// Enable buttons for attacking monster
 			$("#battle").find("button").removeAttr("disabled");
@@ -310,7 +324,10 @@ Kakoi.prototype.attack = function() {
 		}
 		else {
 			missAudio.play();
-			// $(".arena").prepend("<p class='action'>Miss!</p>");
+
+			// Miss animation
+			TweenLite.to(".pet-img", 1, {xPercent: 20});
+			TweenLite.to(".pet-img", 0.5, {xPercent: 0, delay:1});
 			console.log("monster misses");
 
 			// Enable buttons for attacking monster
@@ -594,6 +611,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		$(".monster-health").find(".health-nums").empty();
 		$(".monster-img").empty();
 		$(".pet-img").empty();
+		$(".symbol").empty();
 	})
 
 	

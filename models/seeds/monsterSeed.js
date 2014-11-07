@@ -1,4 +1,3 @@
-var mongoose = require("mongoose");
 var Monster = require("../monster.js");
 var _ = require("underscore");
 
@@ -15,7 +14,7 @@ function randomCoor(lat,lng, pop)
     var x = radius * Math.cos(theta) + lat;
     var y = radius * Math.sin(theta) + lng;
 
-    return [x, y];
+    return {lat: y, lng: x};
 }
 
 // Prefill the database with information

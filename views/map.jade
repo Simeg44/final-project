@@ -1,10 +1,10 @@
 extends layout
 
 block content
-	.map-loading
-		.loading-content
-			img(src="/Images/fallingelf.gif")
-			p Loading...
+	//- .map-loading
+	//- 	.loading-content
+	//- 		img(src="/Images/fallingelf.gif")
+	//- 		p Loading...
 	#map-canvas
 	.container
 		audio#background(src="/Sounds/call_to_adventure.mp3")
@@ -33,7 +33,7 @@ block content
 		audio#poof(src="/Sounds/poof.wav")
 		audio#battle-music(src="/Sounds/mistake_the_getaway.mp3")
 
-		.modal.fade#battle(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+		.modal.fade#battle(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true")
 			.modal-content.arena
 				.arena-back
 					//- img.backdrop(src="/Images/edo_street.gif")
@@ -57,6 +57,7 @@ block content
 						button.btn.btn-default#attack Attack
 						button.btn.btn-default#purify Purify
 						button.btn.btn-default#run(data-dismiss="modal") Run
+				.symbol
 
 
 block scripts
