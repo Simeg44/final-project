@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
+// sockets
+var socketio = require("socket.io");
+var http = require("http")
 
 // controllers
 var indexController = require('./controllers/index.js');
@@ -11,6 +14,11 @@ app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
+
+// Create the server
+var server = http.createServer(app);
+// Start the web socket server
+var io = socketio.listen(server);
 
 mongoose.connect("mongodb://localhost/pandoran");
 
@@ -26,6 +34,12 @@ app.get("/opening", indexController.opening);
 
 // Going to google map screen
 app.get("/worldMap/:id", mapController.mapContent);
+
+app.get("/populate", mapController.populate)
+
+io.sockets.on("connection", function(socket) {
+
+})
 
 var port = process.env.PORT || 6591;
 var server = app.listen(port, function() {

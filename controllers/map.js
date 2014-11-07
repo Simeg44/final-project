@@ -7,7 +7,6 @@ var Player = require("../models/player.js");
 
 var mapController = {
 	mapContent: function(req, res) {
-		console.log("params:", req.params.id);
 		// Eventually make player name match users request
 		Player.findOne({_id: req.params.id}, function(err, playerResults) {
 			console.log(playerResults);
@@ -18,6 +17,16 @@ var mapController = {
 				});
 			});	
 		})
+	},
+
+	populate: function(req, res) {
+		var lat = +req.query.lat;
+		var lng = +req.query.lng;
+		console.log("coor:", [lat, lng]);
+		Monster.find({ location : { $near : [lat, lng], $maxDistance: 0.10 }}, function(err, results) {
+			console.log("results:", results);
+			res.send(results);
+		});
 	}
 };
 

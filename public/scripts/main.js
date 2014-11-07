@@ -32,7 +32,16 @@ var setPlayerPos = function(pos, map) {
 	console.log(playerPet);
 }
 
-var defineMonsters = function() {
+var defineMonsters = function(map) {
+
+	console.log("center:", map.getCenter());
+	var lat = map.getCenter().k;
+	var lng = map.getCenter().B;
+	console.log("coor:", [lng, lat]);
+	$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
+		console.log("response:", responseData);
+	})
+
 	var monsters = monsterData.map(function(item) {
 		var monster = new breed[item.breed]; 
 		monster.location = item.location;
@@ -54,9 +63,11 @@ var definePlayerPet = function() {
 // Fill the map with monsters
 var populate = function(map) {
 
+
+
 	// Convert monsterData from database into
 	// front-end constructor classes
-	var localMonsters = defineMonsters();
+	var localMonsters = defineMonsters(map);
 	console.log(localMonsters);
 
 
@@ -549,6 +560,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	google.maps.event.addDomListener(window, 'load', initialize);
 
 	$(".sense").on("click", function() {
+
 		iterator = 0;
 		populate(map);
 
