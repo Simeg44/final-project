@@ -11,6 +11,47 @@ var playerPet;
 var currentMonster = {};
 
 
+
+///////////////////////
+// Gesture Functions //
+///////////////////////
+
+function onGesture(result) {
+	console.log(result.Name, result.Score);
+	if (result.Name === "triangle") {
+		console.log("success");
+		// Play sounds bits
+		var success = new Audio("/Sounds/shooting_star.wav");
+		var purify = new Audio("/Sounds/success.mp3");
+		success.play();
+		purify.play();
+
+		// white flash animation
+		$(".arena").append("<div class='white-flash'></div>");
+
+		var tl = new TimelineMax({repeat:2});
+
+		tl.to(".white-flash", 0.2, {backgroundColor: "white"});
+		tl.to(".white-flash", 0.2, {backgroundColor: "none"});
+		tl.add("end", 0.7)
+		tl.add(TweenLite.to('.white-flash', 0.5, {backgroundColor: "white"}, "end"));
+		tl.play("end");
+
+		// remove white flash from modal and call
+		// killMonster function after 3 sec
+		setTimeout(function() {
+			$(".arena").find(".white-flash").remove();
+			killMonster();
+		}, 3000);
+
+	}
+	else {
+		console.log("miss");
+		monsterEscape();
+	}
+}
+
+
 ///////////////
 // Functions //
 ///////////////
@@ -80,6 +121,38 @@ var populate = function(map) {
 	    }
 	});
 	
+}
+
+// If the correct symbol is drawn kill monster
+// and delete from database
+function killMonster() {
+	$("#battle").modal("hide");
+	var image = "/Images/icon_shuai.png";
+	currentMonster.monster.marker.setIcon(image);
+
+	setTimeout(function() {
+		$(".monster-health").find(".health").css("width", "100%");
+		$(".pet-img").empty();
+		currentMonster.monster.health = currentMonster.health;	 // permanently change monster health
+		currentMonster.monster.marker.setIcon("/Images/cloud.png");
+		var poof = document.getElementById("poof");
+		poof.play();
+
+		setTimeout(function() {
+			currentMonster.monster.marker.setMap(null);
+		}, 500);
+	}, 1500);
+}
+
+// If the wrong symbol is drawn make monster escape
+// refill health and change locations
+function monsterEscape() {
+	var wrong = new Audio("/Sounds/wrong_answer.wav");
+	wrong.play();
+	setTimeout(function() {
+		var laugh = new Audio("/Sounds/giggling.wav");
+		laugh.play();
+	}, 500);
 }
 
 // Appends modal filled with selected monster info
@@ -195,34 +268,6 @@ var attack = function() {
 
 				$('.add-gesture').gesture(onGesture);
     
-			    function onGesture(result) {
-			      console.log(result.Name, result.Score);
-			      if (result.Name === "triangle") {
-			      	console.log("success");
-
-
-			      }
-			      else {
-			      	console.log("miss");
-			      }
-			    }
-
-				// $("#battle").modal("hide");
-				var image = "/Images/icon_shuai.png";
-				currentMonster.monster.marker.setIcon(image);
-
-				setTimeout(function() {
-					$(".monster-health").find(".health").css("width", "100%");
-					currentMonster.monster.health = currentMonster.health;	 // permanently change monster health
-					currentMonster.monster.marker.setIcon("/Images/cloud.png");
-					var poof = document.getElementById("poof");
-					poof.play();
-
-					setTimeout(function() {
-						currentMonster.monster.marker.setMap(null);
-					}, 500);
-				}, 1500);
-				
 			}
 			else {
 				$(".monster-health").find(".health-nums").empty();
@@ -242,7 +287,7 @@ var attack = function() {
 		missAudio.play();
 
 		// Miss animation
-		TweenLite.to(".pet-img", 1, {xPercent: 20});
+		TweenLite.to(".pet-img", 0.5, {xPercent: 20});
 		TweenLite.to(".pet-img", 0.5, {xPercent: 0, delay:1});
 
 		console.log("player misses");
@@ -254,7 +299,6 @@ var attack = function() {
 	}
 		
 }
-
 
 ////////////////
 // Prototypes //
@@ -326,7 +370,7 @@ Kakoi.prototype.attack = function() {
 			missAudio.play();
 
 			// Miss animation
-			TweenLite.to(".pet-img", 1, {xPercent: 20});
+			TweenLite.to(".pet-img", 0.5, {xPercent: 20});
 			TweenLite.to(".pet-img", 0.5, {xPercent: 0, delay:1});
 			console.log("monster misses");
 
@@ -612,6 +656,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		$(".monster-img").empty();
 		$(".pet-img").empty();
 		$(".symbol").empty();
+		$(".symbol").css("display", "none");
 	})
 
 	

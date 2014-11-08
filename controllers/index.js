@@ -17,6 +17,10 @@ var indexController = {
 	
 	opening: function(req, res) {
 		res.render("opening")
+	},
+
+	menu: function(req, res) {
+		res.render("menu")
 	}
 };
 

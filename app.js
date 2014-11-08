@@ -31,6 +31,7 @@ require("./models/seeds/monsterSeed.js");
 
 app.get('/', indexController.index);
 app.get("/opening", indexController.opening);
+app.get("/menu", indexController.menu);
 
 // Going to google map screen
 app.get("/worldMap/:id", mapController.mapContent);

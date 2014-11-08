@@ -1,0 +1,46 @@
+.menu-info {
+  height: 40em;
+  display: block;
+  position: relative;
+  margin: auto;
+}
+
+.menu-info::after {
+  content: "";
+  background: url("/Images/girl_sketch.png");
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+.info-block {
+	display: inline-block;
+	float: left;
+	height: 13em;
+	width: 14em;
+	border: 3px solid;
+	border-radius: 10px;
+	margin: 4%;
+	text-align: center;
+	background: rgba(255,255,255,0.5);
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+.info-block p {
+	margin-top: 40%;
+	font-family: fantasy;
+	font-size: 2em;
+}
+
+.spacer {
+	height: 2em;
+}

@@ -4,7 +4,7 @@ Coding:
   ✔ add gulp @done (14-11-03 09:56)
   ✔ Fill database with randomly generated monsters @done (14-11-07 14:21)
   ☐ loop battle music
-  ☐ add unistroke functionality
+  ✔ add unistroke functionality @done (14-11-07 18:34)
   ☐ Create regions where monsters can spawn
       ☐ Create circle overlays on google maps
   ✔ Change fight modal @done (14-11-07 14:21)
@@ -13,8 +13,9 @@ Coding:
   ☐ add vulnerability states to monsters
   ☐ Login Page
     ☐ spinning p
-  ☐ Load monsters based on user's geolocation
+  ✔ Load monsters based on user's geolocation @done (14-11-07 18:34)
   ☐ Inventory page
+  ☐ delete monsters on database when killed
   ☐ permanently delete monster markers
 Art:
   ☐ Login page
