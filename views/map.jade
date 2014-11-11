@@ -37,19 +37,18 @@ block content
 
 		.modal.fade#battle(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true")
 			.modal-content.arena
-				.arena-back
+				.arena-back.col-lg-10.col-md-12
 					//- img.backdrop(src="/Images/edo_street.gif")
-					.monster
+					.monster.col-md-3.col-md-offset-1.noselect
+						.symbol
 						.monster-img
-						//- img(src="/Images/monster.png")
 						.monster-health
 							.health-nums
 								p
 							.health-container
 								.health
-					.pet
+					.pet.col-md-2.col-md-offset-6
 						.pet-img
-						//- img(src="/Images/pet.png")
 						.pet-health
 							.health-nums
 								p
@@ -59,7 +58,7 @@ block content
 						button.btn.btn-default#attack Attack
 						button.btn.btn-default#purify Purify
 						button.btn.btn-default#run(data-dismiss="modal") Run
-				.symbol
+				//- .symbol
 
 
 block scripts

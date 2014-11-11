@@ -27,10 +27,19 @@ var mapController = {
 			$geometry: {type: "Point", coordinates: [lng, lat]},
 			$maxDistance: 3000 
 		}}}, function(err, results) {
-			console.log("results:", results);
-			console.log("err:", err);
 			res.send(results);
 		});
+	},
+
+	remove: function(req, res) {
+		console.log(req.query.loc);
+		Monsters.remove({location: req.query.loc}, function(err, results) {
+			res.send({
+				err: err,
+				result: result,
+				success: err === null
+			});
+		})
 	}
 };
 

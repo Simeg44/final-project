@@ -9,6 +9,16 @@ var iterator = 0;
 var turn = true;
 var playerPet;
 var currentMonster = {};
+// sockets
+var socketio = io.connect();
+// symbols array
+var symbols = ["triangle", "circle", "star", "pigtail", "x", "arrow", "caret", "check", "delete", "left curly brace", "rectangle", "v", "zig-zag"];
+
+
+socketio.on("message", function(message){
+	console.log("server said:", message);
+})
+
 
 
 
@@ -16,38 +26,50 @@ var currentMonster = {};
 // Gesture Functions //
 ///////////////////////
 
-function onGesture(result) {
-	console.log(result.Name, result.Score);
-	if (result.Name === "triangle") {
-		console.log("success");
-		// Play sounds bits
-		var success = new Audio("/Sounds/shooting_star.wav");
-		var purify = new Audio("/Sounds/success.mp3");
-		success.play();
-		purify.play();
+var analyzeGesture = function(currentSymbol) {
+	$('.add-gesture').gesture(onGesture);
 
-		// white flash animation
-		$(".arena").append("<div class='white-flash'></div>");
+	function onGesture(result) {
+		console.log(result.Name, result.Score);
+		if (result.Name === currentSymbol) {
+			console.log("success");
+			// Play sounds bits
+			var success = new Audio("/Sounds/shooting_star.wav");
+			var purify = new Audio("/Sounds/success.mp3");
+			success.play();
+			purify.play();
 
-		var tl = new TimelineMax({repeat:2});
+			// remove symbol
+			$(".symbol").empty();
 
-		tl.to(".white-flash", 0.2, {backgroundColor: "white"});
-		tl.to(".white-flash", 0.2, {backgroundColor: "none"});
-		tl.add("end", 0.7)
-		tl.add(TweenLite.to('.white-flash', 0.5, {backgroundColor: "white"}, "end"));
-		tl.play("end");
+			// white flash animation
+			$(".arena").append("<div class='white-flash'></div>");
 
-		// remove white flash from modal and call
-		// killMonster function after 3 sec
-		setTimeout(function() {
-			$(".arena").find(".white-flash").remove();
-			killMonster();
-		}, 3000);
+			var tl = new TimelineMax();
 
-	}
-	else {
-		console.log("miss");
-		monsterEscape();
+			tl.to(".white-flash", 0.2, {backgroundColor: "white"});
+			tl.to(".white-flash", 0.2, {backgroundColor: "none"});
+			tl.to(".white-flash", 0.2, {backgroundColor: "white"});
+			tl.to(".white-flash", 0.2, {backgroundColor: "none"});
+			tl.to(".white-flash", 0.6, {backgroundColor: "white"});
+			tl.to(".white-flash", 1, {scaleX:1.7, scaleY:1.7, glowFilter:{alpha:1, blurX:450, blurY:450}, repeat:-1, yoyo:true});
+
+			// tl.to("#battle", 0.6, {width: "0%", height: "0%"});
+			tl.play();
+
+			// remove white flash from modal and call
+			// killMonster function after 3 sec
+			setTimeout(function() {
+				killMonster();
+				purify.pause();
+				purify.currentTime = 0;
+			}, 2500);
+
+		}
+		else {
+			console.log("miss");
+			monsterEscape();
+		}
 	}
 }
 
@@ -58,6 +80,10 @@ function onGesture(result) {
 
 // Set player position and marker
 var setPlayerPos = function(pos, map) {
+	if(playerData.marker) {
+		playerData.marker.setMap(null)
+	}
+
 	var image = "/Images/sparkle.png";
 
 	var marker = new google.maps.Marker({
@@ -68,25 +94,20 @@ var setPlayerPos = function(pos, map) {
 		title: "Player"
 	});
 	playerData.location = pos;
+	playerData.marker = marker;
 
-	definePlayerPet();
-	console.log(playerPet);
+	// definePlayerPet();
+	// console.log(playerPet);
 }
 
-var defineMonsters = function(map, onComplete) {
+var defineMonsters = function(map, nearbyMonsters) {
 
-	console.log("center:", map.getCenter());
-	var lat = map.getCenter().k;
-	var lng = map.getCenter().B;
-
-	$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
-		var monsters = responseData.map(function(item) {
-			var monster = new breed[item.breed]; 
-			monster.location = item.location;
-			return monster;
-		});
-		onComplete(monsters);
-	})
+	var monsters = nearbyMonsters.map(function(item) {
+		var monster = new breed[item.breed]; 
+		monster.location = item.location;
+		return monster;
+	});
+	return monsters;
 }
 
 var definePlayerPet = function() {
@@ -100,26 +121,27 @@ var definePlayerPet = function() {
 }
 
 // Fill the map with monsters
-var populate = function(map) {
+var populate = function(map, nearbyMonsters) {
 
 	// Convert monsterData from database into
 	// front-end constructor classes
-	defineMonsters(map, function(monsters){
-		if (markers.length > 0) {
-			for (var j = 0; j < monsters.length; j++) {
-				markers[j].setMap(null);
-			}
-			markers = [];
+	var monsters = defineMonsters(map, nearbyMonsters);
+	
+	if (markers.length > 0) {
+		for (var j = 0; j < markers.length; j++) {
+			markers[j].setMap(null);
 		}
+		markers = [];
+	}
 
-	    // Calls monster.render to link the object to 
-	    // markers and add them to the map
-	    for (var i = 0; i < monsters.length; i++) {
-	    	setTimeout(function() {
-	    		monsters[iterator].render(map);
-	    	}, i * 200);
-	    }
-	});
+	// Calls monster.render to link the object to 
+	// markers and add them to the map
+	iterator = 0;
+	for (var i = 0; i < monsters.length; i++) {
+		setTimeout(function() {
+			monsters[iterator].render(map);
+		}, i * 200);
+	}
 	
 }
 
@@ -127,12 +149,14 @@ var populate = function(map) {
 // and delete from database
 function killMonster() {
 	$("#battle").modal("hide");
+	// $(".arena").find(".white-flash").remove();
 	var image = "/Images/icon_shuai.png";
 	currentMonster.monster.marker.setIcon(image);
 
 	setTimeout(function() {
 		$(".monster-health").find(".health").css("width", "100%");
 		$(".pet-img").empty();
+		$(".arena").find(".white-flash").remove();
 		currentMonster.monster.health = currentMonster.health;	 // permanently change monster health
 		currentMonster.monster.marker.setIcon("/Images/cloud.png");
 		var poof = document.getElementById("poof");
@@ -158,7 +182,16 @@ function monsterEscape() {
 // Appends modal filled with selected monster info
 // into the DOM
 var appendMonsterInfo = function (monster) {
-	if (monster.known === false) {
+	// Run through array of known player monsters to 
+	// see if the current monster is a known one
+	currentMonster.known = false;
+	playerData.knownMonsters.map(function(item) {
+		if (item === monster.name) {
+			currentMonster.known = true;
+		}
+	});
+
+	if (!currentMonster.known) {
 		var name = $("<h3 class='monster-name'>???</h3><img class='monster-mini-img' src='/Images/duck_shadow.jpg'>");
 		var local = $("<p class='monster-pref'>Location: <span>???</span></p>");
 		var descrip = $("<div class='descrip'><strong>Purifies To: <strong><p>Common: <span>???</span></p><p>Rare: <span>???</span></p></div>");
@@ -189,11 +222,20 @@ var appendMonsterInfo = function (monster) {
 	$("#monster-info").find(".modal-header").append(name);
 	$("#monster-info").find(".modal-body").append(local).append(descrip);
 
+	$(".monster-img").empty();
+	$(".pet-img").empty();
 	$("#monster-info").modal('show');
 }
 
 // Enter fight mode 
 var enterBattle = function (monster) {
+
+	console.log("monster loc:", monster.location);
+	$.get("/remove", {loc: monster.location}, function(responseData){
+		if (responseData.success) {
+			console.log(responseData.success);
+		}
+	})
 
 	// Set global monster variable as monster 
 	// that player is currently battling
@@ -201,7 +243,12 @@ var enterBattle = function (monster) {
 	currentMonster.health = currentMonster.monster.health;
 	console.log("currentmonster:", currentMonster);
 
+	// Play fight music on loop
 	var audio = document.getElementById("battle-music");
+	audio.addEventListener("ended", function(){
+		this.currentTime = 0;
+		this.play();
+	}, false);
 	audio.play();
 
 	// Append images of fighters to DOM
@@ -233,7 +280,7 @@ var enterBattle = function (monster) {
 	});
 
 	// Plays fight screen music
-	var audio = document.getElementById("fight-clip")
+	var audio = document.getElementById("fight-clip");
 	audio.play();
 
 	setTimeout(function() {
@@ -264,9 +311,14 @@ var attack = function() {
 			// monster defeated
 			if (currentMonster.health <= 0) {
 				$(".symbol").css("display", "block");
-				$(".symbol").append("<div class='add-gesture'><img src='/Images/unistroke.png'></div>");
+				// Attach a random image of a symbol
+				var currentSymbol = _.sample(symbols)
+				$(".symbol").append("<div class='add-gesture'><img src='/Images/symbols/" + currentSymbol + ".png'></div>");
+				TweenMax.to(".add-gesture", 1, {scaleX:1.1, scaleY:1.1, repeat:-1, yoyo:true});
+				// TweenMax.to(".add-gesture", 1, {scaleX:1.4, scaleY:1.4, glowFilter:{color:0x91e600, alpha:1, blurX:50, blurY:50}, repeat:-1, yoyo:true});
 
-				$('.add-gesture').gesture(onGesture);
+				analyzeGesture(currentSymbol);
+				// $('.add-gesture').gesture(onGesture);
     
 			}
 			else {
@@ -324,10 +376,11 @@ Kakoi.prototype.render = function(map) {
 
 	var monster = this;
 	google.maps.event.addListener(marker, 'click', function(event) {
-
+		
 		appendMonsterInfo(monster);
 
 		$("#fight").on("click", function() {
+			
 			enterBattle(monster);
 		})
 
@@ -387,7 +440,8 @@ Kakoi.prototype.attack = function() {
 
 $(document).on('ready', function() {
   
-	
+	definePlayerPet();
+	console.log(playerPet);
 
 	var map;
 
@@ -509,7 +563,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var mapOptions = {
 			zoom: 15,
 			zoomControl: true,
-			draggable: true,
+			draggable: false,
 			scaleControl: false,
 			disableDefaultUI: true,
 			scrollwheel: true,
@@ -606,8 +660,8 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var lat = event.latLng.lat();
 		var lng = event.latLng.lng();
 		console.log(lat, lng);
-		console.log(localMonsters[0]);
 	})
+
 
 	//Associate the styled map with the MapTypeId and set it to display.
 	map.mapTypes.set('map_style', styledMap);
@@ -619,11 +673,52 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	/////////////////////
 
 	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	// Moves player around the map manually (temporary)
+	$(document).keydown(function(e) {
+		var latCenter = map.getCenter().k;
+		var lngCenter = map.getCenter().B;
+
+		switch(e.which) {
+			case 37: // left
+				lngCenter-= 0.01;
+				break;
+			case 38: // up
+				latCenter+= 0.01
+	        	break;
+	        case 39: // right
+	        	lngCenter+= 0.01;
+	        	break;
+	        case 40: // down
+	        	latCenter-= 0.01;
+	        	break;
+			default: return;
+		}
+		var newPos = new google.maps.LatLng(latCenter, lngCenter);
+		map.setCenter(newPos);
+
+	  	// Set map's center as player's location
+	  	setPlayerPos(newPos, map);
+
+	  	socketio.emit("newPos", [lngCenter, latCenter]);
+
+	});
+
+	// Reload monster data after player moves 1100 meters
+	socketio.on("newMonsters", function(newMonsters){
+		if (markers.length > 0) {
+			populate(map, newMonsters);
+		}
+	});
 
 	$(".sense").on("click", function() {
 
-		iterator = 0;
-		populate(map);
+		var lat = map.getCenter().k;
+		var lng = map.getCenter().B;
+
+		$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
+			populate(map, responseData);
+		});
 
 		var audio = document.getElementById("sonar-ping");
 		audio.play();
@@ -655,7 +750,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		$(".monster-health").find(".health-nums").empty();
 		$(".monster-img").empty();
 		$(".pet-img").empty();
-		$(".symbol").empty();
+		// $(".symbol").empty();
 		$(".symbol").css("display", "none");
 	})
 

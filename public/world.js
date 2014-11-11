@@ -45,7 +45,7 @@ var Metus = function(health, strength, defense, speed, location, creates) {
 	Kakoi.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "metus";				// string
-	this.image = "/Images/monster.png";	// image file
+	this.image = "/Images/kakoi/metus.png";	// image file
 	// store this in object for each breed on server side
 	// this.pref = "none";				// preferred location
 	this.known = true;					// bool
@@ -59,7 +59,7 @@ var Nemesis = function(health, strength, defense, speed, location, creates) {
 	this.name = "nemesis";				// string
 	this.health = 500;					// overrides health
 	this.strength = 65;					// overrides strength
-	this.image = "/Images/kakoi.png";	// image file
+	this.image = "/Images/kakoi/nemesis.png";	// image file
 	this.known = false;					// bool
 }
 Nemesis.prototype = new Kakoi();
@@ -73,7 +73,7 @@ var Tenebrae = function(health, strength, defense, speed, location, creates) {
 	this.strength = 70;					// overrides strength
 	this.defense = 60;					// overrides defense
 	this.speed = .7;					// overrides speed
-	this.image = "/Images/kakoi.png";	// image file
+	this.image = "/Images/kakoi/monster.png";	// image file
 	this.known = false;					// bool
 }
 Tenebrae.prototype = new Kakoi();
@@ -87,7 +87,7 @@ var Fraus = function(health, strength, defense, speed, location, creates) {
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
 	this.speed = .9;					// overrides speed
-	this.image = "/Images/kakoi.png";	// image file
+	this.image = "/Images/kakoi/fraus.png";	// image file
 	this.known = true;					// bool
 }
 Fraus.prototype = new Kakoi();
@@ -121,9 +121,25 @@ var Pistis = function(name, level, currentHealth, maxHealth, strength, speed) {
 Pistis.prototype = new Blessing();
 Pistis.prototype.constructor = Pistis;
 
+var Sophrosyne = function(name, level, currentHealth, maxHealth, strength, speed) {
+	Blessing.call(this, name, level, currentHealth);
+
+	// this.name = "pistis";
+	// this.role = "attack";			// string (necessary?)
+	this.maxHealth = 500;
+	this.currentHealth = currentHealth || this.maxHealth;
+	this.strength = strength || 100;
+	this.speed = speed || 200;
+	this.image = "/Images/sophrosyne.png";
+	this.imageBack = "/Images/sophrosyne-back.png";
+}
+Sophrosyne.prototype = new Blessing();
+Sophrosyne.prototype.constructor = Sophrosyne;
+
 // Object containing all the blessing constructors
 var blessing = {
-	"pistis": Pistis
+	"pistis": Pistis,
+	"sophrosyne": Sophrosyne
 }
 
 

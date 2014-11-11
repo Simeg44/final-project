@@ -1,22 +1,32 @@
 Coding:
-  ☐ Move data rendering to client side
   ✔ link opening screen to map @done (14-11-04 14:30)
   ✔ add gulp @done (14-11-03 09:56)
   ✔ Fill database with randomly generated monsters @done (14-11-07 14:21)
-  ☐ loop battle music
+  ✔ loop battle music @done (14-11-10 15:49)
+  ☐ add sockets
+    ☐ updates map when moster defeated
+    ☐ have database create a monster everytime one is destroyed
+  ☐ Make sure there are monsters around player when they load game
+  ☐ Have home base - replenishes health
+     ☐ have monsters spawn regularly around it to siege it - have reprecussions if left undefended for long?
+  ☐ Monster phases
+    ☐ impliment time limits until it returns to full state?
+  ☐ finish unistroke stuff
+    ☐ Have random symbol appear over monster at end of fight
+    ☐ Have monster run to another location when failed 
+    ☐ set timer to complete stroke
   ✔ add unistroke functionality @done (14-11-07 18:34)
   ☐ Create regions where monsters can spawn
       ☐ Create circle overlays on google maps
   ✔ Change fight modal @done (14-11-07 14:21)
   ☐ have database create a monster everytime one is destroyed
-  ☐ add sockets
-  ☐ add vulnerability states to monsters
   ☐ Login Page
     ☐ spinning p
   ✔ Load monsters based on user's geolocation @done (14-11-07 18:34)
   ☐ Inventory page
   ☐ delete monsters on database when killed
   ☐ permanently delete monster markers
+  ☐ Move data rendering to client side
 Art:
   ☐ Login page
       ☐ doroi side

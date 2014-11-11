@@ -49,7 +49,7 @@ $(document).on('ready', function() {
 
 		console.log(playerData);
 		for(var key in playerData) {
-			$("#player-options").append("<div class='title-btn'><a href='worldMap/5446db1246d5fbc4bb0a5157' class='btn btn-default player'>" 
+			$("#player-options").append("<div class='title-btn'><a href='worldMap/" + playerData[key]._id + "' class='btn btn-default player'>" 
 				+ playerData[key].name) + "</div>";
 		}
 		$("#player-options").append("<div class='title-btn'><button class='btn btn-default' id='back-btn'>Back</button></div>");

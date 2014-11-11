@@ -2,8 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 // sockets
-var socketio = require("socket.io");
-var http = require("http")
+// var socketio = require("socket.io");
 
 // controllers
 var indexController = require('./controllers/index.js');
@@ -16,9 +15,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Create the server
-var server = http.createServer(app);
+var http = require("http").Server(app);
 // Start the web socket server
-var io = socketio.listen(server);
+var socketio = require("socket.io")(http);
 
 mongoose.connect("mongodb://localhost/pandoran");
 
@@ -28,6 +27,7 @@ mongoose.connect("mongodb://localhost/pandoran");
 // 	then I dont need to store them in
 // 	a variable
 require("./models/seeds/monsterSeed.js");
+require("./models/seeds/playerSeed.js");
 
 app.get('/', indexController.index);
 app.get("/opening", indexController.opening);
@@ -36,13 +36,19 @@ app.get("/menu", indexController.menu);
 // Going to google map screen
 app.get("/worldMap/:id", mapController.mapContent);
 
-app.get("/populate", mapController.populate)
+app.get("/populate", mapController.populate);
+app.get("/remove", mapController.remove);
 
-io.sockets.on("connection", function(socket) {
+socketio.on("connection", function(socket) {
+	console.log("user connected");
+	var socketController = require("./controllers/socketController.js");
+	var controller = socketController(socketio, socket);
 
+	socket.on("message", controller.message);
+	socket.on("newPos", controller.newPos)
 })
 
 var port = process.env.PORT || 6591;
-var server = app.listen(port, function() {
+var server = http.listen(port, function() {
 	console.log('Express server listening on port ' + server.address().port);
 });
