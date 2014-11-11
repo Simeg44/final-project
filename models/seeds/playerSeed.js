@@ -16,7 +16,11 @@ Player.find({}, function (err, results) {
 				level: 1,
 				currentHealth: 500
 			},
-			knownMonsters: ["fraus", "metus"]
+			knownMonsters: ["fraus", "metus"],
+			home: {
+				lat: 40.016969, 
+				lng: -105.219513
+			}
 		})
 		player.save();
 
@@ -28,7 +32,11 @@ Player.find({}, function (err, results) {
 				level: 1,
 				currentHealth: 500
 			},
-			knownMonsters: ["fraus", "metus"]
+			knownMonsters: ["fraus", "metus"],
+			home: {
+				lat: 40.0176, 
+				lng: -105.2797
+			}
 		})
 		player2.save();
 	}

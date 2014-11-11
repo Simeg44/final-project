@@ -15,8 +15,16 @@ module.exports = function(socketio, socket) {
 				$geometry: {type: "Point", coordinates: loc},
 				$maxDistance: 3000 
 			}}}, function(err, results) {
-				socketio.emit("newMonsters", results);
+				socket.emit("newMonsters", results);
 			});
+		},
+
+		killed: function(loc){
+			Monster.remove({location: loc}, function(err, results){
+				console.log("err", err);
+				console.log("results:", results);
+				socketio.emit("removeMonster", loc);
+			})
 		}
 	};
 

@@ -9,16 +9,11 @@ var iterator = 0;
 var turn = true;
 var playerPet;
 var currentMonster = {};
+var myMonsters = [];
 // sockets
 var socketio = io.connect();
 // symbols array
 var symbols = ["triangle", "circle", "star", "pigtail", "x", "arrow", "caret", "check", "delete", "left curly brace", "rectangle", "v", "zig-zag"];
-
-
-socketio.on("message", function(message){
-	console.log("server said:", message);
-})
-
 
 
 
@@ -78,6 +73,22 @@ var analyzeGesture = function(currentSymbol) {
 // Functions //
 ///////////////
 
+// Set homebase
+var setHome = function(map) {
+	var image = "/Images/toys.png";
+	var pos = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
+	console.log("home pos:", pos);
+
+	var marker = new google.maps.Marker({
+		position: pos,
+		map: map,
+		icon: image,
+		// animation: google.maps.Animation.BOUNCE,
+		title: "Home"
+	});
+
+}
+
 // Set player position and marker
 var setPlayerPos = function(pos, map) {
 	if(playerData.marker) {
@@ -96,8 +107,7 @@ var setPlayerPos = function(pos, map) {
 	playerData.location = pos;
 	playerData.marker = marker;
 
-	// definePlayerPet();
-	// console.log(playerPet);
+	
 }
 
 var defineMonsters = function(map, nearbyMonsters) {
@@ -126,12 +136,14 @@ var populate = function(map, nearbyMonsters) {
 	// Convert monsterData from database into
 	// front-end constructor classes
 	var monsters = defineMonsters(map, nearbyMonsters);
-	
+
+	// If there are already markers/monsters
 	if (markers.length > 0) {
 		for (var j = 0; j < markers.length; j++) {
 			markers[j].setMap(null);
 		}
 		markers = [];
+		myMonsters = [];
 	}
 
 	// Calls monster.render to link the object to 
@@ -140,7 +152,7 @@ var populate = function(map, nearbyMonsters) {
 	for (var i = 0; i < monsters.length; i++) {
 		setTimeout(function() {
 			monsters[iterator].render(map);
-		}, i * 200);
+		}, i);
 	}
 	
 }
@@ -230,12 +242,13 @@ var appendMonsterInfo = function (monster) {
 // Enter fight mode 
 var enterBattle = function (monster) {
 
-	console.log("monster loc:", monster.location);
-	$.get("/remove", {loc: monster.location}, function(responseData){
-		if (responseData.success) {
-			console.log(responseData.success);
-		}
-	})
+	// console.log("monster loc:", monster.location);
+	// $.get("/remove", {loc: monster.location}, function(responseData){
+	// 	if (responseData.success) {
+	// 		console.log(responseData.success);
+	// 	}
+	// })
+	socketio.emit("killed", monster.location);
 
 	// Set global monster variable as monster 
 	// that player is currently battling
@@ -368,12 +381,15 @@ Kakoi.prototype.render = function(map) {
 	var marker = (new google.maps.Marker({
 		position: myLatLng,
 	    map: map,
-	    icon: image,
-	    animation: google.maps.Animation.DROP
+	    icon: image
+	    // animation: google.maps.Animation.DROP
 	}));
+	// add markers to global array
 	markers.push(marker);
 	this.marker = marker;
 
+	// add monsters to global array
+	myMonsters.push(this);
 	var monster = this;
 	google.maps.event.addListener(marker, 'click', function(event) {
 		
@@ -674,6 +690,9 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
+	// Display home marker on map
+	setHome(map);
+
 	// Moves player around the map manually (temporary)
 	$(document).keydown(function(e) {
 		var latCenter = map.getCenter().k;
@@ -681,16 +700,17 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 		switch(e.which) {
 			case 37: // left
-				lngCenter-= 0.01;
+				lngCenter-= 0.001;
+				console.log(markers);
 				break;
 			case 38: // up
-				latCenter+= 0.01
+				latCenter+= 0.001
 	        	break;
 	        case 39: // right
-	        	lngCenter+= 0.01;
+	        	lngCenter+= 0.001;
 	        	break;
 	        case 40: // down
-	        	latCenter-= 0.01;
+	        	latCenter-= 0.001;
 	        	break;
 			default: return;
 		}
@@ -706,10 +726,19 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	// Reload monster data after player moves 1100 meters
 	socketio.on("newMonsters", function(newMonsters){
+		console.log("length", newMonsters.length);
 		if (markers.length > 0) {
 			populate(map, newMonsters);
 		}
 	});
+
+	socketio.on("removeMonster", function(loc){
+		myMonsters.map(function(item) {
+			if(item.location.lat === loc.lat && item.location.lng === loc.lng) {
+				item.marker.setMap(null);
+			}
+		})
+	})
 
 	$(".sense").on("click", function() {
 

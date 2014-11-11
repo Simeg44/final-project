@@ -4,7 +4,7 @@ Coding:
   ✔ Fill database with randomly generated monsters @done (14-11-07 14:21)
   ✔ loop battle music @done (14-11-10 15:49)
   ☐ add sockets
-    ☐ updates map when moster defeated
+    ✔ updates map when moster defeated @done (14-11-10 19:20)
     ☐ have database create a monster everytime one is destroyed
   ☐ Make sure there are monsters around player when they load game
   ☐ Have home base - replenishes health
