@@ -8,6 +8,9 @@ block content
 	#map-canvas
 	.container
 		audio#background(src="/Sounds/call_to_adventure.mp3")
+		.good-container
+			.percent
+		.evil-container
 		.menu-container
 			a.btn.btn-default(href="/menu") Menu
 		.sense-container
@@ -62,10 +65,11 @@ block content
 
 
 block scripts
-	script.
-		var monsterData = !{JSON.stringify(monster)}
+	//- script.
+	//- 	var monsterData = !{JSON.stringify(monster)}
 	script.
 		var playerData = !{JSON.stringify(player)}
 	script(src="/world.js")
+	script(src="/monsters.js")
 	script(src="/scripts/mapoverlay.js")
 	script(src="/scripts/main.js")

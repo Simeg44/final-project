@@ -1,49 +1,3 @@
- html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-
-    }
-
-.sense-container {
-	width: 20%;
-	position: absolute;
-	top: 90%;
-	left: 40%;
-}
-
-@-webkit-keyframes glowing {
-  0% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
-  50% { background-color: #ff8482; -webkit-box-shadow: 0 0 10px #ff8482; }
-  100% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
-}
-
-.glow {
-  -webkit-animation: glowing 1500ms infinite;
-}
-
-span {
-  color: #a8a3a3;
-}
-
-.monster-mini-img {
-  float: right;
-  margin-top: -37%;
-  border: 1px solid black;
-  padding: 3px;
-}
-
-.modal-header {
-  font-family: 'Rock Salt', cursive;
-  padding-bottom: 5%;
-}
-
-.descrip p {
-  margin-left: 1em;
-  font-size: 12px;
-  margin-top: 1em;
-}
-
 .fight-txt {
   position: fixed;
   background: rgba(0,0,0,0.9);
@@ -116,22 +70,21 @@ span {
   width: 100%;
 }
 
-.selection {
+/*.selection {
   position: absolute;
   margin-top: -38px;
   margin-left: 18px;
   z-index: 1;
-}
+}*/
 
-.monster-list {
+/*.monster-list {
   list-style: none;
 }
 
 .hit {
   position: absolute;
   width: 30%;
-  /*margin-top: -100%;*/
-}
+}*/
 
 .health-container {
   border: 1px solid white;
@@ -186,23 +139,6 @@ span {
   border-radius: 5px;
 }
 
-.map-loading {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: white;
-}
-
-.monster-thumb {
-  width: 30%;
-  float: right;
-}
-
-.monster-thumb img {
-  width: 50%;
-}
 
 .symbol {
   position: absolute;
@@ -227,25 +163,79 @@ span {
   right: 0;
   z-index: 2;
 }
+ html, body, #map-canvas {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+
+		}
+
+.sense-container {
+	width: 20%;
+	position: absolute;
+	top: 90%;
+	left: 40%;
+}
+
+@-webkit-keyframes glowing {
+	0% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+	50% { background-color: #ff8482; -webkit-box-shadow: 0 0 10px #ff8482; }
+	100% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+}
+
+.glow {
+	-webkit-animation: glowing 1500ms infinite;
+}
+
+.map-loading {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background: white;
+}
 
 .menu-container {
-  position: absolute;
-  top: 3%;
-  right: 3%;
+	position: absolute;
+	top: 3%;
+	right: 3%;
 }
 
 #batte {
-  margin: auto;
+	margin: auto;
 }
 
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 }
+
+.good-container {
+	width: 3%;
+	height: 72%;
+	border: 2px solid white;
+	border-radius: 15px;
+	position: absolute;
+	left: 4%;
+	bottom: 5%;
+}
+
+.evil-container {
+	width: 3%;
+	height: 72%;
+	border: 2px solid black;
+	border-radius: 15px;
+	position: absolute;
+	right: 4%;
+	bottom: 5%;
+}
+
+
 @media screen and (max-width: 1205px) {
 /*	#battle {
 		width: 100%;
@@ -303,6 +293,36 @@ a:hover {
 
 .spacer {
 	height: 2em;
+}
+span {
+  color: #a8a3a3;
+}
+
+.monster-mini-img {
+  float: right;
+  margin-top: -37%;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.modal-header {
+  font-family: 'Rock Salt', cursive;
+  padding-bottom: 5%;
+}
+
+.descrip p {
+  margin-left: 1em;
+  font-size: 12px;
+  margin-top: 1em;
+}
+
+.monster-thumb {
+  width: 30%;
+  float: right;
+}
+
+.monster-thumb img {
+  width: 50%;
 }
 .title {
   font-family: "Kelly Slab";

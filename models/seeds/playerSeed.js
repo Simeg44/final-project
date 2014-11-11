@@ -11,6 +11,7 @@ Player.find({}, function (err, results) {
 		var player = new Player({
 			name: "Meg",
 			level: 1,
+			alignment: "good",
 			pet: {
 				name: "sophrosyne",
 				level: 1,
@@ -27,6 +28,7 @@ Player.find({}, function (err, results) {
 		var player2 = new Player({
 			name: "John",
 			level: 1,
+			alignment: "evil",
 			pet: {
 				name: "pistis",
 				level: 1,

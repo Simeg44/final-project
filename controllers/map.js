@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 
 // Require monster and player objects
 var Monster = require("../models/monster.js");
+var Doroi = require("../models/doroi.js");
 var Player = require("../models/player.js");
 
 var mapController = {
@@ -22,13 +23,27 @@ var mapController = {
 	populate: function(req, res) {
 		var lat = +req.query.lat;
 		var lng = +req.query.lng;
-		console.log("coor:", [lat, lng]);
-		Monster.find({ location : { $near: {
-			$geometry: {type: "Point", coordinates: [lng, lat]},
-			$maxDistance: 3000 
-		}}}, function(err, results) {
-			res.send(results);
-		});
+		console.log("alignment:", req.query.alignment);
+
+		// If play is on the side of good send 
+		// over nearby evil monsters
+		if (req.query.alignment === "good") {
+			Monster.find({ location : { $near: {
+				$geometry: {type: "Point", coordinates: [lng, lat]},
+				$maxDistance: 3000 
+			}}}, function(err, results) {
+				res.send(results);
+			});
+		}
+		// Otherwise send over list of good monsters
+		else {
+			Doroi.find({ location : { $near: {
+				$geometry: {type: "Point", coordinates: [lng, lat]},
+				$maxDistance: 3000 
+			}}}, function(err, results) {
+				res.send(results);
+			});
+		}
 	},
 
 	remove: function(req, res) {

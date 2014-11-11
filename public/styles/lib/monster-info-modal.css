@@ -1,0 +1,30 @@
+span {
+  color: #a8a3a3;
+}
+
+.monster-mini-img {
+  float: right;
+  margin-top: -37%;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.modal-header {
+  font-family: 'Rock Salt', cursive;
+  padding-bottom: 5%;
+}
+
+.descrip p {
+  margin-left: 1em;
+  font-size: 12px;
+  margin-top: 1em;
+}
+
+.monster-thumb {
+  width: 30%;
+  float: right;
+}
+
+.monster-thumb img {
+  width: 50%;
+}

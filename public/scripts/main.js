@@ -15,7 +15,9 @@ var socketio = io.connect();
 // symbols array
 var symbols = ["triangle", "circle", "star", "pigtail", "x", "arrow", "caret", "check", "delete", "left curly brace", "rectangle", "v", "zig-zag"];
 
-
+socketio.on("connect", function(){
+	socketio.emit("setAlignment", playerData.alignment);
+})
 
 ///////////////////////
 // Gesture Functions //
@@ -83,7 +85,7 @@ var setHome = function(map) {
 		position: pos,
 		map: map,
 		icon: image,
-		// animation: google.maps.Animation.BOUNCE,
+		animation: google.maps.Animation.BOUNCE,
 		title: "Home"
 	});
 
@@ -112,12 +114,23 @@ var setPlayerPos = function(pos, map) {
 
 var defineMonsters = function(map, nearbyMonsters) {
 
-	var monsters = nearbyMonsters.map(function(item) {
-		var monster = new breed[item.breed]; 
-		monster.location = item.location;
-		return monster;
-	});
-	return monsters;
+	if (playerData.alignment === "good") {
+		var monsters = nearbyMonsters.map(function(item) {
+			var monster = new evilBreed[item.breed]; 
+			monster.location = item.location;
+			return monster;
+		});
+		return monsters;
+	}
+	else {
+		var monsters = nearbyMonsters.map(function(item) {
+			var monster = new goodBreed[item.breed]; 
+			monster.location = item.location;
+			return monster;
+		});
+		console.log("monsters:", monsters);
+		return monsters;
+	}
 }
 
 var definePlayerPet = function() {
@@ -164,6 +177,9 @@ function killMonster() {
 	// $(".arena").find(".white-flash").remove();
 	var image = "/Images/icon_shuai.png";
 	currentMonster.monster.marker.setIcon(image);
+
+	// create opposite side monster in database
+	socketio.emit("create", {alignment: playerData.alignment, loc: currentMonster.monster.location});
 
 	setTimeout(function() {
 		$(".monster-health").find(".health").css("width", "100%");
@@ -370,7 +386,7 @@ var attack = function() {
 ////////////////
 
 
-Kakoi.prototype.render = function(map) {
+Monster.prototype.render = function(map) {
 
 	var image = {
 		url: "/Images/icon_angry.png",
@@ -406,7 +422,7 @@ Kakoi.prototype.render = function(map) {
 }
 
 
-Kakoi.prototype.attack = function() {
+Monster.prototype.attack = function() {
 	// var hit = $("<img class='hit' src='Images/hit.png'>");
 	var hitAudio = document.getElementById("hit");
 	var missAudio = document.getElementById("miss");
@@ -455,6 +471,7 @@ Kakoi.prototype.attack = function() {
 ///////////////////////
 
 $(document).on('ready', function() {
+
   
 	definePlayerPet();
 	console.log(playerPet);
@@ -690,8 +707,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
-	// Display home marker on map
-	setHome(map);
+	
 
 	// Moves player around the map manually (temporary)
 	$(document).keydown(function(e) {
@@ -719,8 +735,10 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	  	// Set map's center as player's location
 	  	setPlayerPos(newPos, map);
+	  	// Display home marker on map
+		setHome(map);
 
-	  	socketio.emit("newPos", [lngCenter, latCenter]);
+	  	socketio.emit("newPos", {coor: [lngCenter, latCenter], alignment: playerData.alignment});
 
 	});
 
@@ -738,6 +756,10 @@ $('#battle').on('hidden.bs.modal', function (e) {
 				item.marker.setMap(null);
 			}
 		})
+	});
+
+	socketio.on("justBorn", function(newMonster){
+		console.log(newMonster.location);
 	})
 
 	$(".sense").on("click", function() {
@@ -745,7 +767,8 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var lat = map.getCenter().k;
 		var lng = map.getCenter().B;
 
-		$.get("/populate", {lat: lat, lng: lng}, function(responseData) {
+		console.log(playerData.alignment);
+		$.get("/populate", {lat: lat, lng: lng, alignment: playerData.alignment}, function(responseData) {
 			populate(map, responseData);
 		});
 

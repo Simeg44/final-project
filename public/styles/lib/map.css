@@ -1,9 +1,9 @@
  html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
+				height: 100%;
+				margin: 0px;
+				padding: 0px
 
-    }
+		}
 
 .sense-container {
 	width: 20%;
@@ -13,236 +13,60 @@
 }
 
 @-webkit-keyframes glowing {
-  0% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
-  50% { background-color: #ff8482; -webkit-box-shadow: 0 0 10px #ff8482; }
-  100% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+	0% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
+	50% { background-color: #ff8482; -webkit-box-shadow: 0 0 10px #ff8482; }
+	100% { background-color: #d43f3a; -webkit-box-shadow: 0 0 3px #d43f3a; }
 }
 
 .glow {
-  -webkit-animation: glowing 1500ms infinite;
-}
-
-span {
-  color: #a8a3a3;
-}
-
-.monster-mini-img {
-  float: right;
-  margin-top: -37%;
-  border: 1px solid black;
-  padding: 3px;
-}
-
-.modal-header {
-  font-family: 'Rock Salt', cursive;
-  padding-bottom: 5%;
-}
-
-.descrip p {
-  margin-left: 1em;
-  font-size: 12px;
-  margin-top: 1em;
-}
-
-.fight-txt {
-  position: fixed;
-  background: rgba(0,0,0,0.9);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  display: none;
-  color: white;
-}
-
-.fight-style {
-  margin-top: 25%;
-  margin-left: 35%;
-  font-size: 8em;
-  font-family: 'Rock Salt', cursive;
-}
-
-.texts {
-  list-style: none;
-}
-
-.arena {
-  max-width: 80%;
-  margin: auto;
-  margin-top: 10%;
-  height: 73%;
-  background: url("/Images/edo_street.gif");
-  background-size: cover;
-  position: relative;
-}
-
-.arena-back {
-  width: 100%;
-  /*position: relative;*/
-  height: 100%;
-}
-
-.backdrop {
-  position: absolute;
-  width: 100%;
-  margin-top: -10px;
-}
-
-.char {
-  position: absolute;
-  right: 5%;
-  bottom: 10%;
-}
-
-.pet {
-  position: absolute;
-  /*right: 20%;*/
-  width: 30%;
-  bottom: 0;
-}
-
-.pet img {
-  width: 100%;
-}
-
-.monster {
-  position: absolute;
-  left: 5%;
-  bottom: -5%;
-}
-
-.monster img {
-  width: 100%;
-}
-
-.selection {
-  position: absolute;
-  margin-top: -38px;
-  margin-left: 18px;
-  z-index: 1;
-}
-
-.monster-list {
-  list-style: none;
-}
-
-.hit {
-  position: absolute;
-  width: 30%;
-  /*margin-top: -100%;*/
-}
-
-.health-container {
-  border: 1px solid white;
-  border-radius: 5px;
-}
-
-.health {
-  background-color: #c90000;
-  width: 100%;
-  height: 100%;
-}
-
-.monster-health {
-  position: absolute;
-  top: 0;
-  left: -7%;
-  color: white;
-}
-
-.health-container {
-  width: 8em;
-  height: 1em;
-}
-
-.miss-text {
-  position: absolute;
-  color: white;
-  top: 30%;
-  left: 80%;
-  font-family: "Shadows into Light", cursive;
-}
-
-.pet-health {
-  right: 10%;
-  position: absolute;
-  top: 15%;
-  color: white;
-}
-
-.controls {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 1%;
-  right: 5%;
-  font-family: "shadows into light", cursive;
-  font-size: 20px;
-}
-
-.controls button {
-  background: #4da1a5;
-  border: 3px solid black;
-  border-radius: 5px;
+	-webkit-animation: glowing 1500ms infinite;
 }
 
 .map-loading {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: white;
-}
-
-.monster-thumb {
-  width: 30%;
-  float: right;
-}
-
-.monster-thumb img {
-  width: 50%;
-}
-
-.symbol {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  display: none;
-}
-
-.symbol img {
-  width: 100%;
-  pointer-events: none;
-}
-
-.white-flash {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background: white;
 }
 
 .menu-container {
-  position: absolute;
-  top: 3%;
-  right: 3%;
+	position: absolute;
+	top: 3%;
+	right: 3%;
 }
 
 #batte {
-  margin: auto;
+	margin: auto;
 }
 
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 }
+
+.good-container {
+	width: 3%;
+	height: 72%;
+	border: 2px solid white;
+	border-radius: 15px;
+	position: absolute;
+	left: 4%;
+	bottom: 5%;
+}
+
+.evil-container {
+	width: 3%;
+	height: 72%;
+	border: 2px solid black;
+	border-radius: 15px;
+	position: absolute;
+	right: 4%;
+	bottom: 5%;
+}
+

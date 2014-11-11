@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var Player = mongoose.Schema({
 	name: String,
 	level: Number,
+	alignment: String,
 	location: [Number], 
 	pet: {
 		name: String,

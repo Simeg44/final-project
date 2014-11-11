@@ -1,8 +1,8 @@
-var Monster = require("../monster.js");
+var Doroi = require("../doroi.js");
 var _ = require("underscore");
 
 // Array of breeds to choose from 
-var breeds = ["metus", "nemesis", "fraus", "tenebrae"];
+var breeds = ["dikaiosyne", "apheleia", "bia", "ephiphron", "soter"];
 
 // Returns a set of random coordinantes within
 // the circle of given center and radius
@@ -18,8 +18,9 @@ function randomCoor(lat,lng, pop)
 }
 
 function createOne(loc) {
+	console.log("loc", loc);
 	var location = randomCoor(loc.lat, loc.lng, 10000);
-	var monster = new Monster({
+	var monster = new Doroi({
 		breed: _.sample(breeds),
 		location: randomCoor(location)
 	});
@@ -30,17 +31,17 @@ function createOne(loc) {
 }
 
 // Prefill the database with information
-Monster.find({}, function (err, results) {
+Doroi.find({}, function (err, results) {
 	// If results has a length, then there are
 	// documents already...
 	if (results.length === 0){
 		// If the collection is empty, fill it in
-		console.log("seeding monsters");
+		console.log("seeding doroi");
 
 		// seed Boulder monsters
 		for (var i = 0; i < 40; i ++) {
 
-			var monster = new Monster({
+			var monster = new Doroi({
 				breed: _.sample(breeds),
 				location: randomCoor(40.024603, -105.254139, 103166)
 			});

@@ -27,6 +27,7 @@ mongoose.connect("mongodb://localhost/pandoran");
 // 	then I dont need to store them in
 // 	a variable
 require("./models/seeds/monsterSeed.js");
+require("./models/seeds/doroiSeed.js");
 require("./models/seeds/playerSeed.js");
 
 app.get('/', indexController.index);
@@ -44,9 +45,11 @@ socketio.on("connection", function(socket) {
 	var socketController = require("./controllers/socketController.js");
 	var controller = socketController(socketio, socket);
 
+	socket.on("setAlignment", controller.setAlignment);
 	socket.on("message", controller.message);
 	socket.on("newPos", controller.newPos);
-	socket.on("killed", controller.killed)
+	socket.on("killed", controller.killed);
+	socket.on("create", controller.create);
 })
 
 var port = process.env.PORT || 6591;
