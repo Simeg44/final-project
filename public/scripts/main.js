@@ -205,6 +205,26 @@ var populate = function(map, nearbyMonsters) {
 	
 }
 
+var heal = function() {
+	if (playerPet.currentHealth !== playerPet.maxHealth) {
+		playerPet.currentHealth = playerPet.maxHealth;
+		playerData.pet.currentHealth = playerPet.maxHealth;
+
+		homeMarker[0].setIcon("/Images/home_sparkle.png");
+		setTimeout(function(){
+			homeMarker[0].setIcon("/Images/home_sparkle_2.png");
+			setTimeout(function(){
+				homeMarker[0].setIcon("/Images/home_icon.png");
+			}, 300);
+		}, 300);
+
+
+		var healed = new Audio("/Sounds/home_heal.wav");
+		healed.play();
+	}
+
+}
+
 // If the correct symbol is drawn kill monster
 // and delete from database
 function killMonster() {
@@ -328,6 +348,8 @@ var enterBattle = function (monster) {
 	$(".monster-health").find(".health-nums").append("<p>" + currentMonster.monster.health + "/" + currentMonster.monster.health + "</p>");
 	$(".pet-health").find(".health-nums").append("<p>" + playerPet.currentHealth + "/" 
 		+ playerPet.maxHealth + "</p>");
+	var healthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
+	$(".pet-health").find(".health").css("width", healthLeft + "%");
 
 	// Enable buttons for attacking monster
 	$("#battle").find("button").removeAttr("disabled");
@@ -808,6 +830,12 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	  	// Display home marker on map
 
 	  	socketio.emit("newPos", {coor: [lngCenter, latCenter], alignment: playerData.alignment});
+	  	var home = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
+	  	var distance = google.maps.geometry.spherical.computeDistanceBetween(newPos, home);
+	  	console.log("distance from home:", distance);
+	  	if (distance < 200) {
+	  		heal();
+	  	}
 
 	});
 

@@ -26,7 +26,7 @@ Player.find({}, function (err, results) {
 		player.save();
 
 		var player2 = new Player({
-			name: "John",
+			name: "Antonio",
 			level: 1,
 			alignment: "evil",
 			pet: {
@@ -43,7 +43,7 @@ Player.find({}, function (err, results) {
 		player2.save();
 
 		var player3 = new Player({
-			name: "Josh",
+			name: "Michael",
 			level: 1,
 			alignment: "good",
 			pet: {
