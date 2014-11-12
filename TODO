@@ -3,10 +3,12 @@ Coding:
   ✔ add gulp @done (14-11-03 09:56)
   ✔ Fill database with randomly generated monsters @done (14-11-07 14:21)
   ✔ loop battle music @done (14-11-10 15:49)
-  ☐ add sockets
+  ✔ add sockets @done (14-11-11 20:23)
     ✔ updates map when moster defeated @done (14-11-10 19:20)
-    ☐ have database create a monster everytime one is destroyed
+    ✔ have database create a monster everytime one is destroyed @done (14-11-11 20:03)
   ☐ Make sure there are monsters around player when they load game
+  ☐ Add percentage numbers to world g vs e bars
+    ☐ make bars glow
   ☐ Have home base - replenishes health
      ☐ have monsters spawn regularly around it to siege it - have reprecussions if left undefended for long?
   ☐ Monster phases

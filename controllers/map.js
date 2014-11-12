@@ -58,9 +58,14 @@ var mapController = {
 	},
 
 	getLevels: function(req, res) {
-		var kakoi = Monsters.find({});
-		var doroi = Doroi.find({});
-		console.log("doroi", doroi.length);
+		Monster.find({}, function(err, kakoiResults){
+			Doroi.find({}, function(err, doroiResults) {
+				res.send({
+					kakoi: kakoiResults.length,
+					doroi: doroiResults.length
+				})
+			});
+		});
 	}
 };
 
