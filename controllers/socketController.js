@@ -13,6 +13,28 @@ module.exports = function(socketio, socket) {
 			socket.join(alignment);
 		},
 
+		getLevels: function() {
+			Monster.find({}, function(err, kakoiResults){
+				Doroi.find({}, function(err, doroiResults) {
+					socket.emit("currentLevels", {
+						kakoi: kakoiResults.length,
+						doroi: doroiResults.length
+					})
+				});
+			});
+		},
+
+		refreshLevels: function() {
+			Monster.find({}, function(err, kakoiResults){
+				Doroi.find({}, function(err, doroiResults) {
+					socketio.emit("currentLevels", {
+						kakoi: kakoiResults.length,
+						doroi: doroiResults.length
+					})
+				});
+			});
+		},
+
 		newPos: function(data){
 			if (data.alignment === "good") {
 				Monster.find({ location : { $near: {

@@ -228,7 +228,7 @@
 .evil-container {
 	width: 3%;
 	height: 72%;
-	border: 2px solid black;
+	border: 2px solid white;
 	border-radius: 15px;
 	position: absolute;
 	right: 4%;
@@ -249,6 +249,24 @@
 
 .evil-container .percent {
 	background: black;
+}
+
+.align-nums {
+	font-family: "Rock Salt";
+	position: absolute;
+	font-size: 23px;
+	top: 15%
+}
+
+.good-nums {
+	left: 3%;
+	color: white;
+}
+
+.evil-nums {
+	right: 3%;
+	color: white;
+	/*text-shadow: 0px 2px 6px white;*/
 }
 
 

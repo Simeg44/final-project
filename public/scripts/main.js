@@ -18,6 +18,7 @@ var symbols = ["triangle", "circle", "star", "pigtail", "x", "arrow", "caret", "
 
 socketio.on("connect", function(){
 	socketio.emit("setAlignment", playerData.alignment);
+	socketio.emit("getLevels");
 })
 
 ///////////////////////
@@ -77,7 +78,7 @@ var analyzeGesture = function(currentSymbol) {
 ///////////////
 
 // Get global levels at set intervals
-var globalLevels = function() {
+/*var globalLevels = function() {
 	$.get("/getLevels", {}, function(responseData) {
 		var total = responseData.kakoi + responseData.doroi;
 		console.log("total", total);
@@ -87,7 +88,24 @@ var globalLevels = function() {
 		$(".good-container").find(".percent").css("height", goodPercent + "%");
 		$(".evil-container").find(".percent").css("height", evilPercent + "%");
 	})
-}
+}*/
+
+// Determine global levels of good and evil
+socketio.on("currentLevels", function(levels){
+	var total = levels.kakoi + levels.doroi;
+	console.log("total", total);
+	var goodPercent = Math.round((levels.doroi / total) * 100);
+	var evilPercent = Math.round((levels.kakoi / total) * 100);
+
+	$(".good-container").find(".percent").css("height", goodPercent + "%");
+	$(".evil-container").find(".percent").css("height", evilPercent + "%");
+
+	$(".good-nums").empty();
+	$(".evil-nums").empty();
+	
+	$(".good-nums").append("<p>" + goodPercent + "%</p>");
+	$(".evil-nums").append("<p>" + evilPercent + "%</p>");
+});
 
 // Set homebase
 var setHome = function(map) {
@@ -99,7 +117,6 @@ var setHome = function(map) {
 		position: pos,
 		map: map,
 		icon: image,
-		animation: google.maps.Animation.BOUNCE,
 		title: "Home"
 	});
 	homeMarker.push(marker);
@@ -200,6 +217,9 @@ function killMonster() {
 	socketio.emit("create", {alignment: playerData.alignment, loc: currentMonster.monster.location});
 	console.log("emit");
 
+	// refresh global levels of g vs e for all users
+	socketio.emit("refreshLevels"); 
+
 	setTimeout(function() {
 		$(".monster-health").find(".health").css("width", "100%");
 		$(".pet-img").empty();
@@ -218,8 +238,10 @@ function killMonster() {
 // If the wrong symbol is drawn make monster escape
 // refill health and change locations
 function monsterEscape() {
+
 	var wrong = new Audio("/Sounds/wrong_answer.wav");
 	wrong.play();
+	$("#battle").modal("hide");
 	setTimeout(function() {
 		var laugh = new Audio("/Sounds/giggling.wav");
 		laugh.play();
@@ -404,11 +426,21 @@ var attack = function() {
 
 
 Monster.prototype.render = function(map) {
+	var image;
 
-	var image = {
-		url: "/Images/icon_angry.png",
-    	anchor: new google.maps.Point(38, 38)
-    }
+	// set monster icon based on alignment
+	if (playerData.alignment === "good") {
+		image = {
+			url: "/Images/cloud-icon-bad.png",
+	    	anchor: new google.maps.Point(38, 38)
+	    }
+	}
+	else {
+		image = {
+			url: "/Images/cloud-icon-good.png",
+	    	anchor: new google.maps.Point(38, 38)
+	    }
+	}
 
 
     console.log(this.location);
@@ -490,10 +522,32 @@ Monster.prototype.attack = function() {
 ///////////////////////
 
 $(document).on('ready', function() {
-
-	// Determine global levels of good and evil
-  	globalLevels();
 	
+	TweenMax.to("#good-percent", .3, {
+	    boxShadow: "0px 0px 24px 6px white",
+	    backgroundColor:"white",
+	    color:"#999"
+	});	
+
+	TweenMax.to("#evil-percent", .3, {
+	    boxShadow: "0px 0px 24px 6px black",
+	    backgroundColor:"black",
+	    color:"#999"
+	});
+
+
+	TweenMax.to(".evil-nums", 0.2, {
+	    textShadow:"2px 2px 15px rgba(0, 0, 0, 1)",             
+	    color:"white"
+	});
+
+	TweenMax.to(".good-nums", 0.2, {
+	    textShadow:"2px 2px 15px rgba(255, 255, 255, 1)",             
+	    color:"white"
+	});
+
+
+
 	definePlayerPet();
 	console.log(playerPet);
 
@@ -760,7 +814,8 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	  	socketio.emit("newPos", {coor: [lngCenter, latCenter], alignment: playerData.alignment});
 
 	});
-	// setHome(map);
+
+
 
 	// Reload monster data after player moves 1100 meters
 	socketio.on("newMonsters", function(newMonsters){

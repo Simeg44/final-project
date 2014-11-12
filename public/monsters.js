@@ -86,7 +86,7 @@ var Apheleia = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "apheleia";				// string
-	this.image = "/Images/kakoi/metus.png";	// image file
+	this.image = "/Images/doroi/apheleia.png";	// image file
 	// store this in object for each breed on server side
 	// this.pref = "none";				// preferred location
 	this.known = true;					// bool
@@ -100,7 +100,7 @@ var Bia = function(health, strength, defense, speed, location, creates) {
 	this.name = "bia";				// string
 	this.health = 500;					// overrides health
 	this.strength = 65;					// overrides strength
-	this.image = "/Images/kakoi/nemesis.png";	// image file
+	this.image = "/Images/doroi/apheleia.png";	// image file
 	this.known = false;					// bool
 }
 Bia.prototype = new Monster();
@@ -114,7 +114,7 @@ var Dikaiosyne = function(health, strength, defense, speed, location, creates) {
 	this.strength = 70;					// overrides strength
 	this.defense = 60;					// overrides defense
 	this.speed = .7;					// overrides speed
-	this.image = "/Images/kakoi/monster.png";	// image file
+	this.image = "/Images/doroi/soter.png";	// image file
 	this.known = false;					// bool
 }
 Dikaiosyne.prototype = new Monster();
@@ -128,7 +128,7 @@ var Ephiphron = function(health, strength, defense, speed, location, creates) {
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
 	this.speed = .9;					// overrides speed
-	this.image = "/Images/kakoi/fraus.png";	// image file
+	this.image = "/Images/doroi/soter.png";	// image file
 	this.known = true;					// bool
 }
 Ephiphron.prototype = new Monster();
@@ -142,7 +142,7 @@ var Soter = function(health, strength, defense, speed, location, creates) {
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
 	this.speed = .9;					// overrides speed
-	this.image = "/Images/kakoi/fraus.png";	// image file
+	this.image = "/Images/doroi/soter.png";	// image file
 	this.known = true;					// bool
 }
 Soter.prototype = new Monster();

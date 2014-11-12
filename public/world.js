@@ -36,7 +36,7 @@ var Pistis = function(name, level, currentHealth, maxHealth, strength, speed) {
 
 	// this.name = "pistis";
 	// this.role = "attack";			// string (necessary?)
-	this.maxHealth = 500;
+	this.maxHealth = 700;
 	this.currentHealth = currentHealth || this.maxHealth;
 	this.strength = strength || 100;
 	this.speed = speed || 200;
@@ -54,7 +54,7 @@ var Sophrosyne = function(name, level, currentHealth, maxHealth, strength, speed
 	this.maxHealth = 500;
 	this.currentHealth = currentHealth || this.maxHealth;
 	this.strength = strength || 100;
-	this.speed = speed || 200;
+	this.speed = speed || 500;
 	this.image = "/Images/sophrosyne.png";
 	this.imageBack = "/Images/sophrosyne-back.png";
 }

@@ -8,10 +8,14 @@ block content
 	#map-canvas
 	.container
 		audio#background(src="/Sounds/call_to_adventure.mp3")
-		.good-container
-			.percent
-		.evil-container
-			.percent
+		.good
+			.good-nums.align-nums
+			.good-container
+				.percent#good-percent
+		.evil
+			.evil-nums.align-nums
+			.evil-container
+				.percent#evil-percent
 		.menu-container
 			a.btn.btn-default(href="/menu") Menu
 		.sense-container

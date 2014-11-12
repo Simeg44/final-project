@@ -19,7 +19,7 @@ var http = require("http").Server(app);
 // Start the web socket server
 var socketio = require("socket.io")(http);
 
-mongoose.connect("mongodb://localhost/pandoran");
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/pandoran");
 
 // Seed the database
 // 	Since I don't need to save access
@@ -38,7 +38,7 @@ app.get("/menu", indexController.menu);
 app.get("/worldMap/:id", mapController.mapContent);
 
 app.get("/populate", mapController.populate);
-app.get("/getLevels", mapController.getLevels);
+// app.get("/getLevels", mapController.getLevels);
 
 socketio.on("connection", function(socket) {
 	console.log("user connected");
@@ -46,6 +46,7 @@ socketio.on("connection", function(socket) {
 	var controller = socketController(socketio, socket);
 
 	socket.on("setAlignment", controller.setAlignment);
+	socket.on("getLevels", controller.getLevels)
 	socket.on("newPos", controller.newPos);
 	socket.on("killed", controller.killed);
 	socket.on("create", controller.create);

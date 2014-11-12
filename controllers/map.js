@@ -55,18 +55,18 @@ var mapController = {
 				success: err === null
 			});
 		})
-	},
-
-	getLevels: function(req, res) {
-		Monster.find({}, function(err, kakoiResults){
-			Doroi.find({}, function(err, doroiResults) {
-				res.send({
-					kakoi: kakoiResults.length,
-					doroi: doroiResults.length
-				})
-			});
-		});
 	}
+
+	// getLevels: function(req, res) {
+	// 	Monster.find({}, function(err, kakoiResults){
+	// 		Doroi.find({}, function(err, doroiResults) {
+	// 			res.send({
+	// 				kakoi: kakoiResults.length,
+	// 				doroi: doroiResults.length
+	// 			})
+	// 		});
+	// 	});
+	// }
 };
 
 module.exports = mapController;

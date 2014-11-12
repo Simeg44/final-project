@@ -32,15 +32,32 @@ Player.find({}, function (err, results) {
 			pet: {
 				name: "pistis",
 				level: 1,
-				currentHealth: 500
+				currentHealth: 700
 			},
-			knownMonsters: ["fraus", "metus"],
+			knownMonsters: ["apheleia", "ephiphron"],
 			home: {
 				lat: 40.0176, 
 				lng: -105.2797
 			}
 		})
 		player2.save();
+
+		var player3 = new Player({
+			name: "Josh",
+			level: 1,
+			alignment: "good",
+			pet: {
+				name: "pistis",
+				level: 1,
+				currentHealth: 700
+			},
+			knownMonsters: ["fraus", "metus"],
+			home: {
+				lat: 40.007478, 
+				lng: -105.239520
+			}
+		})
+		player3.save();
 	}
 });
 
