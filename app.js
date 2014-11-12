@@ -46,7 +46,8 @@ socketio.on("connection", function(socket) {
 	var controller = socketController(socketio, socket);
 
 	socket.on("setAlignment", controller.setAlignment);
-	socket.on("getLevels", controller.getLevels)
+	socket.on("getLevels", controller.getLevels);
+	socket.on("refreshLevels", controller.refreshLevels);
 	socket.on("newPos", controller.newPos);
 	socket.on("killed", controller.killed);
 	socket.on("create", controller.create);

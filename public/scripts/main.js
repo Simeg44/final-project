@@ -109,7 +109,7 @@ socketio.on("currentLevels", function(levels){
 
 // Set homebase
 var setHome = function(map) {
-	var image = "/Images/toys.png";
+	var image = "/Images/home_icon.png";
 	var pos = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
 	console.log("home pos:", pos);
 
@@ -361,7 +361,6 @@ var enterBattle = function (monster) {
 
 // Function for player attack
 var attack = function() {
-	var hit = $("<img class='hit' src='/Images/hit.png'>");
 	var hitAudio = document.getElementById("hit");
 	var missAudio = document.getElementById("miss");
 	
@@ -374,7 +373,6 @@ var attack = function() {
 		hitAudio.play();
 
 		setTimeout(function() {
-			$(".monster").find(".hit").remove();
 
 			// monster defeated
 			if (currentMonster.health <= 0) {
@@ -474,7 +472,6 @@ Monster.prototype.render = function(map) {
 
 
 Monster.prototype.attack = function() {
-	// var hit = $("<img class='hit' src='Images/hit.png'>");
 	var hitAudio = document.getElementById("hit");
 	var missAudio = document.getElementById("miss");
 	
@@ -484,7 +481,6 @@ Monster.prototype.attack = function() {
 	setTimeout((function() {
 		if (this.speed+Math.random() > 1) {
 			hitAudio.play();
-			console.log(hit);
 
 			// Shake screen if player is hit
 			TweenLite.fromTo(".pet-img", 0.5, {x:-2}, {x:2, ease:RoughEase.ease.config({strength:8, points:20, template:Linear.easeNone, randomize:false}) , clearProps:"x"})
