@@ -75,6 +75,13 @@ var analyzeGesture = function(currentSymbol) {
 // Functions //
 ///////////////
 
+// Get global levels at set intervals
+var globalLevels = function() {
+	$.get("/getLevels", {}, function(responseData) {
+
+	})
+}
+
 // Set homebase
 var setHome = function(map) {
 	var image = "/Images/toys.png";
@@ -180,6 +187,7 @@ function killMonster() {
 
 	// create opposite side monster in database
 	socketio.emit("create", {alignment: playerData.alignment, loc: currentMonster.monster.location});
+	console.log("emit");
 
 	setTimeout(function() {
 		$(".monster-health").find(".health").css("width", "100%");
@@ -264,7 +272,7 @@ var enterBattle = function (monster) {
 	// 		console.log(responseData.success);
 	// 	}
 	// })
-	socketio.emit("killed", monster.location);
+	socketio.emit("killed", {loc: monster.location, alignment: playerData.alignment});
 
 	// Set global monster variable as monster 
 	// that player is currently battling
@@ -393,6 +401,8 @@ Monster.prototype.render = function(map) {
     	anchor: new google.maps.Point(38, 38)
     }
 
+
+    console.log(this.location);
 	var myLatLng = new google.maps.LatLng(this.location.lng, this.location.lat);
 	var marker = (new google.maps.Marker({
 		position: myLatLng,
@@ -472,7 +482,9 @@ Monster.prototype.attack = function() {
 
 $(document).on('ready', function() {
 
-  
+	// Determine global levels of good and evil
+  	globalLevels();
+	
 	definePlayerPet();
 	console.log(playerPet);
 
@@ -736,11 +748,11 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	  	// Set map's center as player's location
 	  	setPlayerPos(newPos, map);
 	  	// Display home marker on map
-		setHome(map);
 
 	  	socketio.emit("newPos", {coor: [lngCenter, latCenter], alignment: playerData.alignment});
 
 	});
+	setHome(map);
 
 	// Reload monster data after player moves 1100 meters
 	socketio.on("newMonsters", function(newMonsters){
@@ -759,7 +771,20 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	});
 
 	socketio.on("justBorn", function(newMonster){
-		console.log(newMonster.location);
+		console.log(newMonster);
+		var monster;
+
+		if (playerData.alignment === "good") {
+			monster = new evilBreed[newMonster.breed]; 
+			monster.location = newMonster.location;
+		}
+		else {
+			monster = new goodBreed[newMonster.breed]; 
+			monster.location = newMonster.location;
+		}
+		console.log("monster:", monster);
+		console.log("map", map);
+		monster.render(map);
 	})
 
 	$(".sense").on("click", function() {

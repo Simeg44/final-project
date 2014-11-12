@@ -18,10 +18,10 @@ function randomCoor(lat,lng, pop)
 }
 
 function createOne(loc) {
-	var location = randomCoor(loc.lat, loc.lng, 10000);
+	var location = randomCoor(loc.lng, loc.lat, 10);
 	var monster = new Monster({
 		breed: _.sample(breeds),
-		location: randomCoor(location)
+		location: location
 	});
 	monster.save();
 	console.log("creating monster:", monster);

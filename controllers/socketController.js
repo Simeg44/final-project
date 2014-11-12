@@ -13,11 +13,6 @@ module.exports = function(socketio, socket) {
 			socket.join(alignment);
 		},
 
-		message: function(message){
-			console.log("recieved:", message);
-			socketio.emit("emitted");
-		},
-
 		newPos: function(data){
 			if (data.alignment === "good") {
 				Monster.find({ location : { $near: {
@@ -37,12 +32,21 @@ module.exports = function(socketio, socket) {
 			}
 		},
 
-		killed: function(loc){
-			Monster.remove({location: loc}, function(err, results){
-				console.log("err", err);
-				console.log("results:", results);
-				socketio.emit("removeMonster", loc);
-			})
+		killed: function(data){
+			if (data.alignment === "good") {
+				Monster.remove({location: data.loc}, function(err, results){
+					console.log("err", err);
+					console.log("results:", results);
+					socketio.to("good").emit("removeMonster", data.loc);
+				});
+			}
+			else {
+				Doroi.remove({location: data.loc}, function(err, results){
+					console.log("err", err);
+					console.log("results:", results);
+					socketio.to("bad").emit("removeMonster", data.loc);
+				});
+			}
 		},
 
 		create: function(data){

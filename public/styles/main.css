@@ -63,7 +63,7 @@
 .monster {
   position: absolute;
   left: 5%;
-  bottom: -5%;
+  bottom: 4%;
 }
 
 .monster img {
