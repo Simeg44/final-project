@@ -223,6 +223,22 @@ var heal = function() {
 		healed.play();
 	}
 
+};
+
+var victoryScreen = function() {
+	$(".victory-screen").show();
+	TweenLite.to(".victory-info", .3, {
+		boxShadow: "0px 0px 10px 6px black",
+		backgroundColor: "black"
+	});
+
+	// Play victory music
+	var victory = new Audio("/Sounds/victory_fanfare.mp3");
+	victory.play();
+	$(".victory-data").empty();
+	
+	$(".victory-data").append("<p>Experence: " + currentMonster.monster.experience + " xp</p>");
+	$(".victory-data").append("<div class='items'><p><u>Drops</u></p><ul><li>Kakoi crystal shard (sm)</li></ul>");
 }
 
 // If the correct symbol is drawn kill monster
@@ -232,6 +248,7 @@ function killMonster() {
 	// $(".arena").find(".white-flash").remove();
 	var image = "/Images/icon_shuai.png";
 	currentMonster.monster.marker.setIcon(image);
+	
 
 	// create opposite side monster in database
 	socketio.emit("create", {alignment: playerData.alignment, loc: currentMonster.monster.location});
@@ -239,20 +256,23 @@ function killMonster() {
 
 	// refresh global levels of g vs e for all users
 	socketio.emit("refreshLevels"); 
+	console.log("refresh");
+
+	victoryScreen();
 
 	setTimeout(function() {
 		$(".monster-health").find(".health").css("width", "100%");
 		$(".pet-img").empty();
 		$(".arena").find(".white-flash").remove();
 		currentMonster.monster.health = currentMonster.health;	 // permanently change monster health
-		currentMonster.monster.marker.setIcon("/Images/cloud.png");
-		var poof = document.getElementById("poof");
-		poof.play();
+		// currentMonster.monster.marker.setIcon("/Images/cloud.png");
+		// var poof = document.getElementById("poof");
+		// poof.play();
 
 		setTimeout(function() {
 			currentMonster.monster.marker.setMap(null);
 		}, 500);
-	}, 1500);
+	}, 1000);
 }
 
 // If the wrong symbol is drawn make monster escape
@@ -265,6 +285,8 @@ function monsterEscape() {
 	setTimeout(function() {
 		var laugh = new Audio("/Sounds/giggling.wav");
 		laugh.play();
+		var background = document.getElementById("background");
+		background.play();
 	}, 500);
 }
 
@@ -343,13 +365,17 @@ var enterBattle = function (monster) {
 	$(".monster-img").append("<img src='" + currentMonster.monster.image + "'>");
 	$(".pet-img").append("<img src='" + playerPet.imageBack + "'>");
 
-	// Append health bar and health numbers to fighters
+	// Append health bar and health numbers to monster
 	$(".health-nums").empty();
 	$(".monster-health").find(".health-nums").append("<p>" + currentMonster.monster.health + "/" + currentMonster.monster.health + "</p>");
+	var monsterHealthLeft = (currentMonster.health/currentMonster.monster.health) * 100;
+	$(".monster-health").find(".health").css("width", monsterHealthLeft + "%");
+
+	// Append health bar and numbers to pet
 	$(".pet-health").find(".health-nums").append("<p>" + playerPet.currentHealth + "/" 
 		+ playerPet.maxHealth + "</p>");
-	var healthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
-	$(".pet-health").find(".health").css("width", healthLeft + "%");
+	var petHealthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
+	$(".pet-health").find(".health").css("width", petHealthLeft + "%");
 
 	// Enable buttons for attacking monster
 	$("#battle").find("button").removeAttr("disabled");
@@ -463,7 +489,6 @@ Monster.prototype.render = function(map) {
 	}
 
 
-    console.log(this.location);
 	var myLatLng = new google.maps.LatLng(this.location.lng, this.location.lat);
 	var marker = (new google.maps.Marker({
 		position: myLatLng,
@@ -843,7 +868,6 @@ $('#battle').on('hidden.bs.modal', function (e) {
 
 	// Reload monster data after player moves 1100 meters
 	socketio.on("newMonsters", function(newMonsters){
-		console.log("length", newMonsters.length);
 		if (markers.length > 0) {
 			populate(map, newMonsters);
 		}
@@ -909,10 +933,9 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	// Stops fight music and plays map music whenever
 	// the modal is closed
 	$('#battle').on('hidden.bs.modal', function (e) {
-		var background = document.getElementById("background");
+
 		var fight = document.getElementById("battle-music");
 
-		background.play();
 		fight.pause();
 		fight.currentTime = 0;
 
@@ -926,6 +949,13 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	
 	$(document).on("click", "#attack", function() {
 		attack();
+	});
+
+	$("#victory").on("click", "button", function() {
+		$(this).closest(".victory-screen").hide();
+
+		var background = document.getElementById("background");
+		background.play();
 	})
 
 });

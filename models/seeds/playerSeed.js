@@ -36,8 +36,8 @@ Player.find({}, function (err, results) {
 			},
 			knownMonsters: ["apheleia", "ephiphron"],
 			home: {
-				lat: 40.0176, 
-				lng: -105.2797
+				lat: 40.015334, 
+				lng: -105.246301
 			}
 		})
 		player2.save();

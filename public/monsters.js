@@ -19,6 +19,7 @@ var Metus = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "metus";				// string
+	this.experience = 100;
 	this.image = "/Images/kakoi/metus.png";	// image file
 	// store this in object for each breed on server side
 	// this.pref = "none";				// preferred location
@@ -31,6 +32,7 @@ var Nemesis = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "nemesis";				// string
+	this.experience = 300;
 	this.health = 500;					// overrides health
 	this.strength = 65;					// overrides strength
 	this.image = "/Images/kakoi/nemesis.png";	// image file
@@ -43,11 +45,12 @@ var Tenebrae = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "tenebrae";				// string
+	this.experience = 380;
 	this.health = 650;					// overrides health
 	this.strength = 70;					// overrides strength
 	this.defense = 60;					// overrides defense
 	this.speed = .7;					// overrides speed
-	this.image = "/Images/kakoi/monster.png";	// image file
+	this.image = "/Images/kakoi/nemesis.png";	// image file
 	this.known = false;					// bool
 }
 Tenebrae.prototype = new Monster();
@@ -57,6 +60,7 @@ var Fraus = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "fraus";				// string
+	this.experience = 150;
 	this.health = 350;					// overrides health
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
@@ -86,6 +90,7 @@ var Apheleia = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "apheleia";				// string
+	this.experience = 100;
 	this.image = "/Images/doroi/apheleia.png";	// image file
 	// store this in object for each breed on server side
 	// this.pref = "none";				// preferred location
@@ -98,6 +103,7 @@ var Bia = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "bia";				// string
+	this.experience = 300;
 	this.health = 500;					// overrides health
 	this.strength = 65;					// overrides strength
 	this.image = "/Images/doroi/apheleia.png";	// image file
@@ -110,6 +116,7 @@ var Dikaiosyne = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "dikaiosyne";				// string
+	this.experience = 380;
 	this.health = 650;					// overrides health
 	this.strength = 70;					// overrides strength
 	this.defense = 60;					// overrides defense
@@ -124,6 +131,7 @@ var Ephiphron = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "ephiphron";				// string
+	this.experience = 150;
 	this.health = 350;					// overrides health
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense
@@ -138,6 +146,7 @@ var Soter = function(health, strength, defense, speed, location, creates) {
 	Monster.call(this, health, strength, defense, speed, location, creates);
 
 	this.name = "soter";				// string
+	this.experience = 250;
 	this.health = 350;					// overrides health
 	this.strength = 30;					// overrides strength
 	this.defense = 30;					// overrides defense

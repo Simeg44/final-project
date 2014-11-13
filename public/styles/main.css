@@ -410,3 +410,76 @@ span {
   bottom: 0;
   right: 10%;
 }
+.victory-screen {
+	position: absolute;
+	top: 0;	
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	display: none;
+}
+
+.victory-info {
+	top: 25%;
+	height: 26em;
+	background: black;
+	border: 1px solid white;
+	text-align: center;
+	color: white;
+	font-family: "Kelly Slab";
+	position: absolute;
+}
+
+.victory-info .header {
+	border-bottom: 3px solid white;
+	position: relative;
+}
+
+.victory-data {
+	margin-top: 10%;
+}
+
+i {
+	position: absolute;
+	top: 20%;
+}
+
+.star1 {
+	left: 29%;
+	top: 34%;
+}
+
+.star2 {
+	left: 33%;
+	top: 34%;
+}
+
+.star3 {
+	left: 37%;
+}
+
+.star4 {
+	right: 37%;
+}
+
+.star5 {
+	right: 33%;
+	top: 34%;
+}
+
+.star6 {
+	right: 29%;
+	top: 34%;
+}
+
+.items {
+	border: 1px solid white;
+	padding: 10px 39px;
+	margin: 3%;
+	display: inline-block;
+}
+
+.items ul {
+	list-style: none;
+}

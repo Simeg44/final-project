@@ -17,7 +17,7 @@ $(document).on('ready', function() {
 	setTimeout(function() {
 		$(".opening-quote").fadeOut("slow");
 		$(".tlt-quote").textillate("stop");
-	}, 1000);
+	}, 6000);
 	
 	var title = $("#light-title");
 	var container = $(".title-background");
