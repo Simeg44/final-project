@@ -30,14 +30,30 @@ $(document).on('ready', function() {
 	});*/
 	TweenLite.set(container, {perspective:200});
 	var tween = TweenMax.fromTo(title, 0.7, {
-	    textShadow: "0px 0px 0px rgba(0,0,0,0.3)"
+	    textShadow: "0px 0px 0px rgba(255,255,255,0.3)"
 	}, {
-	    textShadow: "1px 1px 15px rgba(0,0,0,1)",
+	    textShadow: "1px 1px 15px rgba(255,255,255,1)",
 	    repeat: -1,
 	    yoyo: true,
 	    ease: Linear.easeNone
 	})
 	tween.duration(3).delay(0.2);
+
+	var tween2 = TweenMax.fromTo(".title-reverse", 0.7, {
+	    textShadow: "0px 0px 0px rgba(255,255,255,0.3)"
+	}, {
+	    textShadow: "1px 1px 15px rgba(255,255,255,1)",
+	    repeat: -1,
+	    yoyo: true,
+	    ease: Linear.easeNone
+	})
+	tween2.duration(3).delay(0.4);
+
+	TweenMax.to(".title-background", .3, {
+	    boxShadow: "0px 0px 24px 6px black",
+	    backgroundColor:"black",
+	    color:"#999"
+	});
 
 	// Change menu buttons when clicking continue
 	// and append the various player objects ids

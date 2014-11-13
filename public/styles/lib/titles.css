@@ -1,18 +1,36 @@
 .title {
   font-family: "Kelly Slab";
   position: absolute;
-  right: 10%;
+  right: 20%;
   font-size: 5em;
+  color: white;
+  border-left: 5px solid;
+}
+
+.title-reverse {
+  font-family: "Kelly Slab";
+  position: absolute;
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
+  -o-transform:rotateY(180deg);
+  -ms-transform:rotateY(180deg);
+  /*unicode-bidi:bidi-override;*/
+  /*direction:rtl;*/
+  left: 17%;
+  font-size: 5em;
+  color: black;
+  border-left: 5px solid;
 }
 
 
 .title-background {
-  background-image: url("/Images/girl_sketch.png");
+  background-image: url("/Images/tempcover.png");
   background-size: cover;
-  border: 3px solid black;
+  border: 3px solid white;
   text-align: center;
-  /*margin-top: 10em;*/
+  margin-top: 10em;
   height: 32em;
+  text-align: center;
 }
 
 .title-btn {
@@ -48,5 +66,10 @@
 .options {
   position: absolute;
   bottom: 0;
-  right: 10%;
+  right: 44%;
+}
+
+.btn-default{
+  color: white;
+  background-color: black;
 }
