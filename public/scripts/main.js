@@ -717,7 +717,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	function initialize() {
 		var mapOptions = {
 			zoom: 15,
-			zoomControl: true,
+			zoomControl: false,
 			draggable: false,
 			scaleControl: false,
 			disableDefaultUI: true,
