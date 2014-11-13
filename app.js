@@ -19,8 +19,8 @@ var http = require("http").Server(app);
 // Start the web socket server
 var socketio = require("socket.io")(http);
 
-// mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/pandoran");
-mongoose.connect("mongodb://localhost/pandoran");
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/pandoran");
+// mongoose.connect("mongodb://localhost/pandoran");
 
 // Seed the database
 // 	Since I don't need to save access

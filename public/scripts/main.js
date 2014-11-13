@@ -67,6 +67,10 @@ var analyzeGesture = function(currentSymbol) {
 		}
 		else {
 			console.log("miss");
+			
+			// remove symbol
+			$(".symbol").empty();
+			
 			monsterEscape();
 		}
 	}
