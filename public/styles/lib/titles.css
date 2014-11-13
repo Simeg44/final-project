@@ -73,3 +73,44 @@
   color: white;
   background-color: black;
 }
+
+#back-btn2 {
+  position: absolute;
+  bottom: 4%;
+  right: 48%;
+}
+
+.sides {
+  font-family: "Kelly Slab";
+  font-size: 2em;
+  position: relative;
+  width: 100%;
+  display: none;
+  color: white;
+  height: 100%;
+}
+
+.good-side {
+  right: 10%;
+  position: absolute;
+  text-shadow: 2px 2px black;
+  top: 5%;
+  height: 93%;
+}
+
+.evil-side {
+  left: 10%;
+  position: absolute;
+  top: 5%;
+  text-shadow: 2px 2px black;
+  height: 93%;
+}
+
+.choose {
+  font-size: 40px;
+  position: absolute;
+  top: 45%;
+  left: 32%;
+  border: 1px solid white;
+  padding: 0px 10px;
+}

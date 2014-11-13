@@ -72,10 +72,21 @@ $(document).on('ready', function() {
 		$("#player-options").css("display", "block");
 	});
 
+	// Return to main menu selection from continue button
 	$(document).on("click", "#back-btn", function(){
 		$("#player-options").css("display", "none");
 		$("#options").css("display", "block");
 		$("#player-options").empty();
+	});
+
+	// Return to main menu selection from new game button
+	$(document).on("click", "#back-btn2", function(){
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover.png')");
+		$("#options").show();
+		$(".sides").hide();
+		$("#light-title").show();
+		$("#dark-title").show();
+		$(this).remove();
 	})
 
 	// Play sound on button mouseover
@@ -91,13 +102,30 @@ $(document).on('ready', function() {
 	})
 
 	$("#new-game-btn").on("click", function(){
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
+		$(".evil-side").css("color", "gray");
+		$(".good-side").css("color", "white");
+		$(".sides").show()
+		$("#light-title").hide();
+		$("#dark-title").hide();
+		$("#options").hide();
+		$(".title-background").append("<div class='title-btn'><button class='btn btn-default' id='back-btn2'>Back</button></div>");
+	})
 
-		/*$(".fight-txt").show();
-		$(".tlt").textillate("start");
-		$(".tlt").textillate ({
-			selector: ".texts",
-			minDisplayTime: 0,
-		});*/
+	$(".good-side").on("click", function(){
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
+		$(".evil-side").css("color", "gray");
+		$(".good-side").css("color", "white");
+	})
+
+	$(".evil-side").on("click", function(){
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-evil.png')");
+		$(".good-side").css("color", "gray");
+		$(".evil-side").css("color", "white");
+	})
+
+	$(".good-side").on("mouseover", function(){
+		this.css("textShadow", "2px 2px white")
 	})
 
 /*	$(document).on("click", ".player", function(e) {
