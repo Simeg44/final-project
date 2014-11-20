@@ -29,6 +29,30 @@
   background: url("/Images/edo_street.gif");
   background-size: cover;
   position: relative;
+  
+}
+
+.arena-img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.arena-img img {
+  height: 100%;
+}
+
+.arena-style {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /*background: rgba(0,0,0,0.5);*/
+  border: 2px solid white;
 }
 
 .arena-back {

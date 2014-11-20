@@ -513,6 +513,21 @@ Monster.prototype.render = function(map) {
 
 		$("#fight").on("click", function() {
 				
+
+			var location = monster.marker.position.k + "," + monster.marker.position.B;
+			// var url = "url('https://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + location + "&heading=235&fov=40')";
+			var url = "https://maps.googleapis.com/maps/api/streetview?size=600x400&location=" + location + "&heading=235&fov=40";
+			console.log("monster marker pos:", url);
+			// panorama = map.getStreetView();
+			// panorama.setPosition(monster.marker.position);
+			// panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+			//     heading: 265,
+			//     pitch: 0
+		 //  	}));
+
+			// console.log(panorama);
+		  	// $(".arena").css("background", url);
+		  	$(".arena-img").append("<img src='/Images/downtown_boulder3.jpg'>");
 			enterBattle(monster);
 		});
 
@@ -718,10 +733,11 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var mapOptions = {
 			zoom: 15,
 			zoomControl: false,
-			draggable: false,
+			draggable: true,
 			scaleControl: false,
 			disableDefaultUI: true,
 			scrollwheel: true,
+			streetViewControl: false,
 
 		     // Include the MapTypeId to add to the map type control
 		    mapTypeControlOptions: {
@@ -932,6 +948,7 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	$('#monster-info').on('hidden.bs.modal', function (e) {
 		$(this).find(".modal-header").empty();
 		$(this).find(".modal-body").empty();
+		$("#fight").off("click");
 	})
 
 	// Stops fight music and plays map music whenever
