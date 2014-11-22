@@ -498,6 +498,52 @@ span {
   border: 1px solid white;
   padding: 0px 10px;
 }
+
+.canvas {
+  background: black;
+}
+
+.good-info-box {
+  display: none;
+  width: 40%;
+  height: 90%;
+  position: absolute;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid black;
+  top: 4%;
+  left: 4%;
+  z-index: 1;
+}
+
+.evil-info-box {
+  display: none;
+  width: 40%;
+  height: 90%;
+  position: absolute;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid black;
+  top: 4%;
+  right: 4%;
+  z-index: 1;
+}
+
+.evil-info, .good-info {
+  color: black;
+  font-size: 18px;
+  margin-top: 14%;
+  border-top: 1px solid;
+  padding: 15% 5%;
+}
+
+.choice-btns {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+}
+
+/*.choice-btns > button {
+  margin-right: 20%;
+}*/
 .victory-screen {
 	position: absolute;
 	top: 0;	

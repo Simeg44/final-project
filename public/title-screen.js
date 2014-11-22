@@ -1,3 +1,6 @@
+// Keeps track of where a side had been chosen
+var sideActive = false;
+
 $(document).on('ready', function() {
 
 	// Play title background on loop
@@ -102,31 +105,99 @@ $(document).on('ready', function() {
 	})
 
 	$("#new-game-btn").on("click", function(){
-		$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
-		$(".evil-side").css("color", "gray");
-		$(".good-side").css("color", "white");
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
+		// $(".evil-side").css("color", "gray");
+		// $(".good-side").css("color", "gray");
 		$(".sides").show()
+
+		// hide Pandoran titles
 		$("#light-title").hide();
 		$("#dark-title").hide();
+
+		// Hide main menu buttons
 		$("#options").hide();
 		$(".title-background").append("<div class='title-btn'><button class='btn btn-default' id='back-btn2'>Back</button></div>");
 	})
 
 	$(".good-side").on("click", function(){
-		$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
-		$(".evil-side").css("color", "gray");
-		$(".good-side").css("color", "white");
+		if (sideActive === false) {
+			$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
+			$(".evil-side").hide();
+			$(".good-side").show();
+			$(".good-side").css("color", "white");
+
+			// Fill info box and add buttons
+			TweenMax.to(".good-side", .8, {color: "#000000", right:"63%", zIndex: 2, textShadow: "none"});
+			setTimeout(function() {
+				$(".good-side").append("<div class='choice-btns'><button id='mychoice' class='btn btn-default'>Continue</button><button id='choose-again-good' class='btn btn-default'>Go Back</button></div>");
+			}, 800);
+
+			// Temp hide choice and back button
+			$(".choose").hide();
+			$("#back-btn2").hide();
+
+			// toggle info boxes
+			$(".good-info-box").fadeToggle();
+			$(".evil-info-box").hide();
+
+			// Makes sure side cant be clicked a second time
+			sideActive = true;
+		}
+	})
+
+	$(document).on("click", "#choose-again-good", function () {
+		sideActive = false;
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
+		$(".evil-side").show();
+		TweenMax.to(".good-side", .8, {color: "white", right:"10%", zIndex: 1, textShadow: "2px 2px black"});
+		$(".good-info-box").hide();
+		$(".good-side").find(".choice-btns").remove();
+		$("#back-btn2").show();
+		$(".choose").show();
 	})
 
 	$(".evil-side").on("click", function(){
-		$(".title-background").css("backgroundImage", "url('/Images/tempcover-evil.png')");
-		$(".good-side").css("color", "gray");
-		$(".evil-side").css("color", "white");
+		if (sideActive === false) {
+			$(".title-background").css("backgroundImage", "url('/Images/tempcover-evil.png')");
+			$(".evil-side").css("color", "white");
+			$(".evil-side").show();
+			$(".good-side").hide();
+
+			// Fill info box and add buttons
+			TweenMax.to(".evil-side", .8, {color: "#000000", left:"60%", zIndex: 2, textShadow: "none"});
+			// $(".evil-info").fadeToggle();
+			setTimeout(function() {
+				$(".evil-side").append("<div class='choice-btns'><button id='mychoice' class='btn btn-default'>Continue</button><button id='choose-again-evil' class='btn btn-default'>Go Back</button></div>");
+			}, 800);
+			
+			// Temp hide choice and back button
+			$(".choose").hide();
+			$("#back-btn2").hide();
+
+			// toggle info boxes
+			$(".evil-info-box").fadeToggle();
+			$(".good-info-box").hide();
+
+			// Makes sure side cant be clicked a second time
+			sideActive = true;
+		}
 	})
 
-	$(".good-side").on("mouseover", function(){
-		this.css("textShadow", "2px 2px white")
+	$(document).on("click", "#choose-again-evil", function () {
+		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
+		$(".good-side").show();
+		TweenMax.to(".evil-side", .8, {color: "white", left:"10%", zIndex: 1, textShadow: "2px 2px black"});
+		$(".evil-info-box").hide();
+		$(".evil-side").find(".choice-btns").remove();
+		$(".choose").show();
+		$("#back-btn2").show();
+		sideActive = false;
 	})
+
+
+	// $(".good-side").on("mouseover", function(){
+	// 	this.css("textShadow", "2px 2px white")
+	// })
 
 /*	$(document).on("click", ".player", function(e) {
 		e.stopPropagation();
