@@ -58,6 +58,10 @@ $(document).on('ready', function() {
 	    color:"#999"
 	});
 
+	//////////////
+	// Continue //
+	//////////////
+
 	// Change menu buttons when clicking continue
 	// and append the various player objects ids
 	// to the elements
@@ -104,6 +108,12 @@ $(document).on('ready', function() {
 		click.play();
 	})
 
+	///////////////
+	// New Game //
+	///////////////
+
+	// When starting new game hide main titles and 
+	// change background to grayed out one
 	$("#new-game-btn").on("click", function(){
 		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
 		// $(".evil-side").css("color", "gray");
@@ -119,6 +129,8 @@ $(document).on('ready', function() {
 		$(".title-background").append("<div class='title-btn'><button class='btn btn-default' id='back-btn2'>Back</button></div>");
 	})
 
+	// When the player clicks on good side change background
+	// and bring up info box
 	$(".good-side").on("click", function(){
 		if (sideActive === false) {
 			$(".title-background").css("backgroundImage", "url('/Images/tempcover-good.png')");
@@ -145,6 +157,7 @@ $(document).on('ready', function() {
 		}
 	})
 
+	// After hitting the back button return to main choice page
 	$(document).on("click", "#choose-again-good", function () {
 		sideActive = false;
 		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
@@ -156,6 +169,8 @@ $(document).on('ready', function() {
 		$(".choose").show();
 	})
 
+	// When the player chooses the evil side change background
+	// and bring up info box
 	$(".evil-side").on("click", function(){
 		if (sideActive === false) {
 			$(".title-background").css("backgroundImage", "url('/Images/tempcover-evil.png')");
@@ -167,7 +182,7 @@ $(document).on('ready', function() {
 			TweenMax.to(".evil-side", .8, {color: "#000000", left:"60%", zIndex: 2, textShadow: "none"});
 			// $(".evil-info").fadeToggle();
 			setTimeout(function() {
-				$(".evil-side").append("<div class='choice-btns'><button id='mychoice' class='btn btn-default'>Continue</button><button id='choose-again-evil' class='btn btn-default'>Go Back</button></div>");
+				$(".evil-side").append("<div class='choice-btns'><a href='/opening' id='mychoice-evil' class='btn btn-default'>Continue</a><button id='choose-again' class='btn btn-default'>Go Back</button></div>");
 			}, 800);
 			
 			// Temp hide choice and back button
@@ -183,6 +198,7 @@ $(document).on('ready', function() {
 		}
 	})
 
+	// After hitting the back button return to main choice page
 	$(document).on("click", "#choose-again-evil", function () {
 		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
 		$(".good-side").show();
@@ -192,30 +208,14 @@ $(document).on('ready', function() {
 		$(".choose").show();
 		$("#back-btn2").show();
 		sideActive = false;
+	});
+
+	$(document).on("click", "#mychoice-evil", function () {
+		// body...
 	})
 
 
-	// $(".good-side").on("mouseover", function(){
-	// 	this.css("textShadow", "2px 2px white")
-	// })
-
-/*	$(document).on("click", ".player", function(e) {
-		e.stopPropagation();
 
 
-		var id = $(this).attr("id");
-		var player;
-		
-		for(var key in playerData) {
-			if(playerData[key]._id === id) {
-				console.log(playerData[key]);
-				player = playerData[key];
-			}
-		}
-		console.log("id", id);
-		$.get("/map", {id: id}, function(responseData) {
-
-		})	
-	})*/
 
 });
