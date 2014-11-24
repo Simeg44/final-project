@@ -115,10 +115,6 @@
   padding: 0px 10px;
 }
 
-.canvas {
-  background: black;
-}
-
 .good-info-box {
   display: none;
   width: 40%;
@@ -157,6 +153,30 @@
   width: 100%;
 }
 
-/*.choice-btns > button {
-  margin-right: 20%;
-}*/
+.intro {
+  background: url("/Images/text-background3.jpg");
+  background-size: cover;
+  position: absolute;
+  z-index: 5;
+  height: 25%;
+  bottom: 0;
+  border-radius: 5px;
+}
+
+.intro-modals {
+  text-align: center;
+  font-family: "Kelly Slab";
+  padding: 5%;
+}
+
+.name-modal .btn {
+  margin-top: 10px;
+}
+
+.name-input {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  margin: 3%;
+}

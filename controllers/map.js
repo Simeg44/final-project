@@ -10,13 +10,9 @@ var mapController = {
 	mapContent: function(req, res) {
 		// Eventually make player name match users request
 		Player.findOne({_id: req.params.id}, function(err, playerResults) {
-			console.log(playerResults);
-			Monster.find({}, function(err, monsterResults) {
-				res.render("map", {
-					monster: monsterResults,
-					player: playerResults
-				});
-			});	
+			res.render("map", {
+				player: playerResults
+			});
 		})
 	},
 

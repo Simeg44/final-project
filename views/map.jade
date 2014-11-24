@@ -22,7 +22,37 @@ block content
 			audio#sonar-ping(src="/Sounds/sonar.wav")
 			button.sense.btn.btn-danger.btn-block Locate
 	
-		.modal.fade#monster-info(tabindex="-1" role="dialog" aria-labelledby="myModalLabl" aria-hidden="true")
+		.modal.fade#home.home.col-lg-6.col-lg-offset-3(tabindex="-1" role="dialog" aria-labelledby="home" aria-hidden="true")
+			.modal-content.home.intro-modals
+				h4 Would you like to use your current location as the home base?
+				p.bg-danger Once you set your home base you must return to this location whenever you wish to heal.
+				.home-response
+					button.yes.btn.btn-default(data-dismiss="modal") Yes
+					//- button.no.btn.btn-default(data-dismiss="modal") No
+
+		.modal.fade#instructions.col-lg-8.col-lg-offset-2(tabindex="-1" role="dialog" aria-labelledby="instructions" aria-hidden="true")
+			.modal-content.intro-modals
+				.modal-header
+					h4 Welcome to Pandoran
+				.modal-body.instructions
+					p.bg-info This game is still in early development stages so I appreciate your patience.
+					h5 Basic Instructions
+					.instruction-list
+						ul 
+							li Use the "Locate" button to find monsters in your immediate area (It will only show monsters within a certain distance, and these will change as you move)
+							li Normally the map is locked on the player's location, but since there are only currently monsters in Boulder city you may use the arrow keys to move around and the mousewheel to zoom
+							li Clicking on a monster icon will bring up info about that monster and allow you the option to fight it
+							li The bars on the right and left represent what side is currently ahead. Everytime your side kills a monster your bar will go up, and a monster will spawn on the enemy's side
+					h5 Fighting
+					.instruction-list
+						ul 
+							li Currently only the "Attack" and "Run" buttons function
+							li When the monster's health hits 0 a symbol will appear. Draw the correct symbol with your cursor to finish the monster off (Hint: Most symbols must be drawn from top to bottom, except for the star which starts on the bottom left point. Generally start where the line is thinnest and draw towards where it's thickest).
+							li Enjoy!
+				.modal-footer
+					button.btn.btn-default(data-dismiss="modal") Got It!
+
+		.modal.fade#monster-info(tabindex="-1" role="dialog" aria-labelledby="monster-info" aria-hidden="true")
 			.modal-dialog
 				.modal-content
 					.modal-header
@@ -43,7 +73,7 @@ block content
 		audio#poof(src="/Sounds/poof.wav")
 		audio#battle-music(src="/Sounds/mistake_the_getaway.mp3")
 
-		.modal.fade#battle(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true")
+		.modal.fade#battle(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="battle" aria-hidden="true")
 			.modal-content.arena
 				.arena-img
 				.arena-style

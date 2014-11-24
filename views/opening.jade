@@ -2,6 +2,11 @@ extends layout
 
 block content
 	//- canvas.canvas
+	.intro.col-lg-8.col-lg-offset-2
 
+
+script.
+		var openingText = !{JSON.stringify(text)}
 block scripts
 	script(src="/scripts/opening.js")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js")

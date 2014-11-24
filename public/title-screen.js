@@ -141,7 +141,7 @@ $(document).on('ready', function() {
 			// Fill info box and add buttons
 			TweenMax.to(".good-side", .8, {color: "#000000", right:"63%", zIndex: 2, textShadow: "none"});
 			setTimeout(function() {
-				$(".good-side").append("<div class='choice-btns'><button id='mychoice' class='btn btn-default'>Continue</button><button id='choose-again-good' class='btn btn-default'>Go Back</button></div>");
+				$(".good-side").append("<div class='choice-btns'><button id='mychoice-good' class='btn btn-default'>Continue</button><button id='choose-again-good' class='btn btn-default'>Go Back</button></div>");
 			}, 800);
 
 			// Temp hide choice and back button
@@ -182,7 +182,8 @@ $(document).on('ready', function() {
 			TweenMax.to(".evil-side", .8, {color: "#000000", left:"60%", zIndex: 2, textShadow: "none"});
 			// $(".evil-info").fadeToggle();
 			setTimeout(function() {
-				$(".evil-side").append("<div class='choice-btns'><a href='/opening' id='mychoice-evil' class='btn btn-default'>Continue</a><button id='choose-again' class='btn btn-default'>Go Back</button></div>");
+				// $(".evil-side").append("<div class='choice-btns'><a href='/opening' id='mychoice-evil' class='btn btn-default'>Continue</a><button id='choose-again-evil' class='btn btn-default'>Go Back</button></div>");
+				$(".evil-side").append("<div class='choice-btns'><button id='mychoice-evil' class='btn btn-default'>Continue</button><button id='choose-again-evil' class='btn btn-default'>Go Back</button></div>");
 			}, 800);
 			
 			// Temp hide choice and back button
@@ -200,6 +201,7 @@ $(document).on('ready', function() {
 
 	// After hitting the back button return to main choice page
 	$(document).on("click", "#choose-again-evil", function () {
+		sideActive = false;
 		$(".title-background").css("backgroundImage", "url('/Images/tempcover-choose.png')");
 		$(".good-side").show();
 		TweenMax.to(".evil-side", .8, {color: "white", left:"10%", zIndex: 1, textShadow: "2px 2px black"});
@@ -207,11 +209,20 @@ $(document).on('ready', function() {
 		$(".evil-side").find(".choice-btns").remove();
 		$(".choose").show();
 		$("#back-btn2").show();
-		sideActive = false;
 	});
 
+	// Bring up good form when player chooses this side
+	$(document).on("click", "#mychoice-good", function () {
+		var height = $(window).height();
+		$("#name-good").css("margin-top", height/2);
+		$("#name-good").modal("show");
+	})
+
+	// Bring up evil form when player chooses this side
 	$(document).on("click", "#mychoice-evil", function () {
-		// body...
+		var height = $(window).height();
+		$("#name-evil").css("margin-top", height/2);
+		$("#name-evil").modal("show");
 	})
 
 

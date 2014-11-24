@@ -35,6 +35,9 @@ app.get('/', indexController.index);
 app.get("/opening", indexController.opening);
 app.get("/menu", indexController.menu);
 
+// Create new player when new game is selected and name entered
+app.post("/newGame", indexController.newGame);
+
 // Going to google map screen
 app.get("/worldMap/:id", mapController.mapContent);
 

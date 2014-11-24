@@ -24,6 +24,27 @@ block content
 				.evil-info-box
 					.evil-info Forget perfection and utopia. You see the value in the human struggle. To you sadness and pain are a necessary evil, without which human's would never truly understand the fleeting beauty of life.
 				.choose Choose Your Side 
+		
+		.modal.fade#name-good(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="name" aria-hidden="true").col-lg-6.col-lg-offset-3
+			.modal-content.name-modal.intro-modals
+				h4 Please enter your name:
+				form(id="name", method="post", action="/newGame")
+					input(type="text" name="name" placeholder="Name" required).name-input
+					br
+					input(type="hidden" name="alignment" value="good")
+					input(type="submit" value="Continue").btn.btn-default
+					button.btn.btn-default(data-dismiss="modal") Cancel
+
+		.modal.fade#name-evil(tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="name" aria-hidden="true").col-lg-6.col-lg-offset-3
+			.modal-content.name-modal.intro-modals
+				h4 Please enter your name:
+				form(id="name", method="post", action="/newGame")
+					input(type="text" name="name" placeholder="Name" required).name-input
+					br
+					input(type="hidden" name="alignment" value="evil")
+					input(type="submit" value="Continue").btn.btn-default
+					button.btn.btn-default(data-dismiss="modal") Cancel
+
 
 
 

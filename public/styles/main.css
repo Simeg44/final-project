@@ -293,6 +293,25 @@
 	/*text-shadow: 0px 2px 6px white;*/
 }
 
+.home {
+	padding: 5% 10%;
+}
+
+.home button {
+	margin: 2%;
+}
+
+.instruction-list li {
+	padding: 10px;
+}
+
+
+.instructions h5 {
+	border: 1px solid black;
+	padding: 10px;
+
+}
+
 
 @media screen and (max-width: 1205px) {
 /*	#battle {
@@ -499,10 +518,6 @@ span {
   padding: 0px 10px;
 }
 
-.canvas {
-  background: black;
-}
-
 .good-info-box {
   display: none;
   width: 40%;
@@ -541,9 +556,33 @@ span {
   width: 100%;
 }
 
-/*.choice-btns > button {
-  margin-right: 20%;
-}*/
+.intro {
+  background: url("/Images/text-background3.jpg");
+  background-size: cover;
+  position: absolute;
+  z-index: 5;
+  height: 25%;
+  bottom: 0;
+  border-radius: 5px;
+}
+
+.intro-modals {
+  text-align: center;
+  font-family: "Kelly Slab";
+  padding: 5%;
+}
+
+.name-modal .btn {
+  margin-top: 10px;
+}
+
+.name-input {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  margin: 3%;
+}
 .victory-screen {
 	position: absolute;
 	top: 0;	

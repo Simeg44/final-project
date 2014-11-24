@@ -111,19 +111,24 @@ socketio.on("currentLevels", function(levels){
 	$(".evil-nums").append("<p>" + evilPercent + "%</p>");
 });
 
-// Set homebase
+// Set homebase icon
 var setHome = function(map) {
-	var image = "/Images/home_icon.png";
-	var pos = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
-	console.log("home pos:", pos);
+	if (!playerData.home) {
+		$("#home").modal("show");
+	}
+	else {
+		var image = "/Images/home_icon.png";
+		var pos = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
+		console.log("home pos:", pos);
 
-	var marker = new google.maps.Marker({
-		position: pos,
-		map: map,
-		icon: image,
-		title: "Home"
-	});
-	homeMarker.push(marker);
+		var marker = new google.maps.Marker({
+			position: pos,
+			map: map,
+			icon: image,
+			title: "Home"
+		});
+		homeMarker.push(marker);
+	}
 }
 
 // Set player position and marker
@@ -972,12 +977,35 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		attack();
 	});
 
+	// Remove victory screen
 	$("#victory").on("click", "button", function() {
 		$(this).closest(".victory-screen").hide();
 
 		var background = document.getElementById("background");
 		background.play();
 	})
+
+	// Set player's home base location
+	$("#home").on("click", ".yes", function () {
+		console.log(playerData);
+		playerData.home = {};
+		playerData.home.lat = map.getCenter().k;
+		playerData.home.lng = map.getCenter().B;
+		
+		setHome(map);
+
+		// Give visual and audio cue that something has happened
+		// and home has been set
+		heal();
+
+	})
+
+	// After a small amount of time show instructions
+	$('#home').on('hidden.bs.modal', function (e) {
+		setTimeout(function () {
+			$("#instructions").modal("show");
+		}, 500);
+	});
 
 });
 
