@@ -180,3 +180,7 @@
   text-align: center;
   margin: 3%;
 }
+
+.modal {
+  overflow-y: auto;
+}

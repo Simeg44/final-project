@@ -1007,6 +1007,11 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		}, 500);
 	});
 
+	// Also show instructions when button is clicked
+	$(".info-container").on("click", "button", function() {
+		$("#instructions").modal("show");
+	})
+
 });
 
 

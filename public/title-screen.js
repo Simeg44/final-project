@@ -214,14 +214,14 @@ $(document).on('ready', function() {
 	// Bring up good form when player chooses this side
 	$(document).on("click", "#mychoice-good", function () {
 		var height = $(window).height();
-		$("#name-good").css("margin-top", height/2);
+		$("#name-good").css("margin-top", height/4);
 		$("#name-good").modal("show");
 	})
 
 	// Bring up evil form when player chooses this side
 	$(document).on("click", "#mychoice-evil", function () {
 		var height = $(window).height();
-		$("#name-evil").css("margin-top", height/2);
+		$("#name-evil").css("margin-top", height/4);
 		$("#name-evil").modal("show");
 	})
 
