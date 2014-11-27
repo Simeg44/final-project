@@ -297,6 +297,11 @@ function monsterEscape() {
 		var background = document.getElementById("background");
 		background.play();
 	}, 500);
+
+	// Move monster to another location so player can't
+	// easily just click on it again
+	console.log("move monster");
+	socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
 }
 
 // Appends modal filled with selected monster info
@@ -976,6 +981,11 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	$(document).on("click", "#attack", function() {
 		attack();
 	});
+
+	$(document).on("click", "#run", function () {
+		socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
+		console.log("move monster");
+	})
 
 	// Remove victory screen
 	$("#victory").on("click", "button", function() {

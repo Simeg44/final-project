@@ -71,6 +71,8 @@ module.exports = function(socketio, socket) {
 			}
 		},
 
+		// After monster is killed spawn monster for players of 
+		// opposite alignment
 		create: function(data){
 			if (data.alignment === "good") {
 				var newMonster = spawnGood.create(data.loc);
@@ -79,6 +81,21 @@ module.exports = function(socketio, socket) {
 			else {
 				var newMonster = spawnBad.create(data.loc);
 				socketio.to("good").emit("justBorn", newMonster);
+			}
+		},
+
+		// If player fails to kill monster after engaging them
+		// move monster to another location in same alignment
+		moveMonster: function(data) {
+			if (data.alignment === "good") {
+				var newMonster = spawnBad.create(data.loc);
+				socketio.to("good").emit("justBorn", newMonster);
+				console.log("monster moved");
+			}
+			else {
+				var newMonster = spawnGood.create(data.loc);
+				socketio.to("evil").emit("justBorn", newMonster);
+				console.log("monster moved");
 			}
 		}
 	};

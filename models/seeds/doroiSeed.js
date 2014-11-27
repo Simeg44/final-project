@@ -19,7 +19,7 @@ function randomCoor(lat,lng, pop)
 
 function createOne(loc) {
 	console.log("loc", loc);
-	var location = randomCoor(loc.lng, loc.lat, 10);
+	var location = randomCoor(loc.lng, loc.lat, 3000);
 	var monster = new Doroi({
 		breed: _.sample(breeds),
 		location: location

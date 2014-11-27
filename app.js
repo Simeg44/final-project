@@ -55,6 +55,7 @@ socketio.on("connection", function(socket) {
 	socket.on("newPos", controller.newPos);
 	socket.on("killed", controller.killed);
 	socket.on("create", controller.create);
+	socket.on("moveMonster", controller.moveMonster);
 })
 
 var port = process.env.PORT || 6591;
