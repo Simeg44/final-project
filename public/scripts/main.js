@@ -977,14 +977,18 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		$(".symbol").css("display", "none");
 	})
 
-	
+	// Call attack function when player presses attack button
 	$(document).on("click", "#attack", function() {
 		attack();
 	});
 
+	// If player chooses to run, activate monster laugh and move monster to somewhere nearby
 	$(document).on("click", "#run", function () {
+		var laugh = new Audio("/Sounds/giggling.wav");
+		laugh.play();
+
 		socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
-		console.log("move monster");
+		console.log("move monster");g
 	})
 
 	// Remove victory screen

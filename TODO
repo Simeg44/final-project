@@ -8,7 +8,7 @@ Coding:
     ✔ have database create a monster everytime one is destroyed @done (14-11-11 20:03)
   ☐ Make sure there are monsters around player when they load game
   ☐ Add monsters to known array after killing them
-  ☐ Add percentage numbers to world g vs e bars
+  ✔ Add percentage numbers to world g vs e bars @done (14-11-27 12:44)
     ✔ make bars glow @done (14-11-12 15:50)
   ✔ Have home base - replenishes health @done (14-11-12 15:50)
      ☐ have monsters spawn regularly around it to siege it - have reprecussions if left undefended for long?
@@ -16,7 +16,7 @@ Coding:
     ☐ impliment time limits until it returns to full state?
   ☐ finish unistroke stuff
     ✔ Have random symbol appear over monster at end of fight @done (14-11-12 15:50)
-    ☐ Have monster run to another location when failed 
+    ✔ Have monster run to another location when failed  @done (14-11-27 12:40)
     ☐ set timer to complete stroke
   ✔ add unistroke functionality @done (14-11-07 18:34)
   ☐ Create regions where monsters can spawn
@@ -27,9 +27,9 @@ Coding:
     ☐ spinning p
   ✔ Load monsters based on user's geolocation @done (14-11-07 18:34)
   ☐ Inventory page
-  ☐ delete monsters on database when killed
+  ✔ delete monsters on database when killed @done (14-11-27 12:40)
   ☐ permanently delete monster markers
-  ☐ Move data rendering to client side
+  ✔ Move data rendering to client side @done (14-11-27 12:40)
 Art:
   ☐ Login page
       ☐ doroi side

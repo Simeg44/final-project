@@ -66,7 +66,7 @@ module.exports = function(socketio, socket) {
 				Doroi.remove({location: data.loc}, function(err, results){
 					console.log("err", err);
 					console.log("results:", results);
-					socketio.to("bad").emit("removeMonster", data.loc);
+					socketio.to("evil").emit("removeMonster", data.loc);
 				});
 			}
 		},
