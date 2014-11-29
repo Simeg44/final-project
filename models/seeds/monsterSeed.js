@@ -18,7 +18,7 @@ function randomCoor(lat,lng, pop)
 }
 
 function createOne(loc) {
-	var location = randomCoor(loc.lng, loc.lat, 3000);
+	var location = randomCoor(loc.lng, loc.lat, 5000);
 	var monster = new Monster({
 		breed: _.sample(breeds),
 		location: location

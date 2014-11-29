@@ -56,6 +56,10 @@ socketio.on("connection", function(socket) {
 	socket.on("killed", controller.killed);
 	socket.on("create", controller.create);
 	socket.on("moveMonster", controller.moveMonster);
+
+	// Update player/pet in database
+	socket.on("updateHealth", controller.updateHealth);
+	socket.on("setHome", controller.setHome);
 })
 
 var port = process.env.PORT || 6591;

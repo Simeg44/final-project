@@ -300,8 +300,10 @@ function monsterEscape() {
 
 	// Move monster to another location so player can't
 	// easily just click on it again
-	console.log("move monster");
-	socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
+	setTimeout(function () {
+		socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
+		console.log("move monster");
+	}, 10000);
 }
 
 // Appends modal filled with selected monster info
@@ -962,13 +964,16 @@ $('#battle').on('hidden.bs.modal', function (e) {
 	})
 
 	// Stops fight music and plays map music whenever
-	// the modal is closed
+	// the battle modal is closed
 	$('#battle').on('hidden.bs.modal', function (e) {
 
 		var fight = document.getElementById("battle-music");
 
 		fight.pause();
 		fight.currentTime = 0;
+
+		socketio.emit("updateHealth", {health: playerPet.currentHealth, id: playerData._id});
+		console.log("update pet health to", playerPet.currentHealth);
 
 		$(".monster-health").find(".health-nums").empty();
 		$(".monster-img").empty();
@@ -987,8 +992,10 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		var laugh = new Audio("/Sounds/giggling.wav");
 		laugh.play();
 
-		socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
-		console.log("move monster");g
+		setTimeout(function () {
+			socketio.emit("moveMonster", {alignment: playerData.alignment, loc: currentMonster.monster.location});
+			console.log("move monster");
+		}, 10000);
 	})
 
 	// Remove victory screen
@@ -1007,6 +1014,9 @@ $('#battle').on('hidden.bs.modal', function (e) {
 		playerData.home.lng = map.getCenter().B;
 		
 		setHome(map);
+
+		// Permanently set this as player's home base
+		socketio.emit("setHome", {id: playerData._id, lat: playerData.home.lat, lng: playerData.home.lng});
 
 		// Give visual and audio cue that something has happened
 		// and home has been set

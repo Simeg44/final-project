@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var Player = require("../models/player.js");
 var Monster = require("../models/monster.js");
 var Doroi = require("../models/doroi.js");
 var spawnBad = require("../models/seeds/monsterSeed.js");
@@ -97,6 +98,28 @@ module.exports = function(socketio, socket) {
 				socketio.to("evil").emit("justBorn", newMonster);
 				console.log("monster moved");
 			}
+		},
+
+		// Update pet's current health
+		updateHealth: function (data) {
+			var health = +data.health;
+			console.log("health", health)
+			// Player.update({_id: data.id}, {$set: {pet: {currentHealth: health}}});
+			Player.findOne({_id: data.id}, function (err, results) {
+				results.pet.currentHealth = health;
+				results.save();
+				console.log("new health:", results);
+			})
+		},
+
+		// Set player's "home" location
+		setHome: function (data) {
+			Player.findOne({_id: data.id}, function (err, results) {
+				results.home.lat = data.lat;
+				results.home.lng = data.lng;
+				results.save();
+				console.log("home set", results);
+			})
 		}
 	};
 
