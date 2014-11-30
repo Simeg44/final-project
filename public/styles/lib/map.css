@@ -130,3 +130,16 @@
 
 }
 
+.defeated {
+	font-family: "Kelly Slab";
+	text-align: center;
+}
+
+.defeated .modal-header {
+	color: red;
+}
+
+.defeated .modal-footer {
+	text-align: center;
+}
+

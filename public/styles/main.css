@@ -77,15 +77,19 @@
   position: absolute;
   width: 50%;
   bottom: 0;
+  height: 70%;
+  right: 0;
 }
 
-.pet img {
-  width: 100%;
+.pet-img {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  right: 20%;
 }
 
 .monster {
   position: absolute;
-  left: 5%;
   bottom: 4%;
 }
 
@@ -316,6 +320,19 @@
 	border: 1px solid black;
 	padding: 10px;
 
+}
+
+.defeated {
+	font-family: "Kelly Slab";
+	text-align: center;
+}
+
+.defeated .modal-header {
+	color: red;
+}
+
+.defeated .modal-footer {
+	text-align: center;
 }
 
 

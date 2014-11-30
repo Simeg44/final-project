@@ -40,8 +40,8 @@ var Pistis = function(name, level, currentHealth, maxHealth, strength, speed) {
 	this.currentHealth = currentHealth || this.maxHealth;
 	this.strength = strength || 100;
 	this.speed = speed || 200;
-	this.image = "/Images/carbuncle.png";
-	this.imageBack = "/Images/pet.png";
+	this.image = "/Images/pets/pet.png";
+	this.imageBack = "/Images/pets/pet.png";
 }
 Pistis.prototype = new Blessing();
 Pistis.prototype.constructor = Pistis;
@@ -55,8 +55,9 @@ var Sophrosyne = function(name, level, currentHealth, maxHealth, strength, speed
 	this.currentHealth = currentHealth || this.maxHealth;
 	this.strength = strength || 100;
 	this.speed = speed || 500;
-	this.image = "/Images/sophrosyne.png";
-	this.imageBack = "/Images/sophrosyne-back.png";
+	this.image = "/Images/pets/sophrosyne.png";
+	this.imageBack = "/Images/pets/sophrosyne-sprites.png";
+	// this.imageDeath = "/Images/pets/sophrosyne-sprites.png";
 }
 Sophrosyne.prototype = new Blessing();
 Sophrosyne.prototype.constructor = Sophrosyne;

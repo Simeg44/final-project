@@ -71,6 +71,8 @@ var analyzeGesture = function(currentSymbol) {
 			// remove symbol
 			$(".symbol").empty();
 			
+			var wrong = new Audio("/Sounds/wrong_answer.wav");
+		wrong.play();
 			monsterEscape();
 		}
 	}
@@ -117,7 +119,7 @@ var setHome = function(map) {
 		$("#home").modal("show");
 	}
 	else {
-		var image = "/Images/home_icon.png";
+		var image = "/Images/markers/home_icon.png";
 		var pos = new google.maps.LatLng(playerData.home.lat, playerData.home.lng);
 		console.log("home pos:", pos);
 
@@ -141,7 +143,7 @@ var setPlayerPos = function(pos, map) {
 		setHome(map);
 	}
 
-	var image = "/Images/sparkle.png";
+	var image = "/Images/markers/sparkle.png";
 
 	var marker = new google.maps.Marker({
 		position: pos,
@@ -219,11 +221,11 @@ var heal = function() {
 		playerPet.currentHealth = playerPet.maxHealth;
 		playerData.pet.currentHealth = playerPet.maxHealth;
 
-		homeMarker[0].setIcon("/Images/home_sparkle.png");
+		homeMarker[0].setIcon("/Images/markers/home_sparkle.png");
 		setTimeout(function(){
-			homeMarker[0].setIcon("/Images/home_sparkle_2.png");
+			homeMarker[0].setIcon("/Images/markers/home_sparkle_2.png");
 			setTimeout(function(){
-				homeMarker[0].setIcon("/Images/home_icon.png");
+				homeMarker[0].setIcon("/Images/markers/home_icon.png");
 			}, 300);
 		}, 300);
 
@@ -255,7 +257,7 @@ var victoryScreen = function() {
 function killMonster() {
 	$("#battle").modal("hide");
 	// $(".arena").find(".white-flash").remove();
-	var image = "/Images/icon_shuai.png";
+	var image = "/Images/markers/icon_shuai.png";
 	currentMonster.monster.marker.setIcon(image);
 	
 
@@ -288,8 +290,8 @@ function killMonster() {
 // refill health and change locations
 function monsterEscape() {
 
-	var wrong = new Audio("/Sounds/wrong_answer.wav");
-	wrong.play();
+	// var wrong = new Audio("/Sounds/wrong_answer.wav");
+	// wrong.play();
 	$("#battle").modal("hide");
 	setTimeout(function() {
 		var laugh = new Audio("/Sounds/giggling.wav");
@@ -379,7 +381,9 @@ var enterBattle = function (monster) {
 
 	// Append images of fighters to DOM
 	$(".monster-img").append("<img src='" + currentMonster.monster.image + "'>");
-	$(".pet-img").append("<img src='" + playerPet.imageBack + "'>");
+	$("#pet-img").css("background-image", "url('" + playerPet.imageBack + "')");
+	$("#pet-img").css("background-position", "0");
+
 
 	// Append health bar and health numbers to monster
 	$(".health-nums").empty();
@@ -493,13 +497,13 @@ Monster.prototype.render = function(map) {
 	// set monster icon based on alignment
 	if (playerData.alignment === "good") {
 		image = {
-			url: "/Images/cloud-icon-bad.png",
+			url: "/Images/markers/cloud-icon-bad.png",
 	    	anchor: new google.maps.Point(38, 38)
 	    }
 	}
 	else {
 		image = {
-			url: "/Images/cloud-icon-good.png",
+			url: "/Images/markers/cloud-icon-good.png",
 	    	anchor: new google.maps.Point(38, 38)
 	    }
 	}
@@ -539,8 +543,13 @@ Monster.prototype.render = function(map) {
 
 			// console.log(panorama);
 		  	// $(".arena").css("background", url);
-		  	$(".arena-img").append("<img src='/Images/downtown_boulder3.jpg'>");
-			enterBattle(monster);
+		  	if (playerPet.currentHealth > 0) {
+			  	$(".arena-img").append("<img src='/Images/downtown_boulder3.jpg'>");
+				enterBattle(monster);
+			}
+			else {
+				$("#defeated").modal("show");
+			}
 		});
 
 	})
@@ -567,9 +576,38 @@ Monster.prototype.attack = function() {
 			console.log("pistis:", playerPet.currentHealth);
 
 			$(".pet-health").find(".health-nums").empty();
-			$(".pet-health").find(".health-nums").append("<p>" + playerPet.currentHealth + "/" + playerPet.maxHealth + "</p>");
-			var healthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
-			$(".pet-health").find(".health").css("width", healthLeft + "%");
+
+			// If hit reduces pet health to 0 make battle end and 
+			// prevent player from entering any other battles
+			if (playerPet.currentHealth < 1) {
+				$(".pet-health").find(".health-nums").append("<p>0/" + playerPet.maxHealth + "</p>");
+				$(".pet-health").find(".health").css("width", "0%");
+
+				// Play death animation and vanishing sound effect
+				var vanish = new Audio("/Sounds/pet-death.wav");
+				vanish.play();
+				console.log(vanish);
+				// $(".pet-img").empty();
+				// $(".pet-img").append("<img src=" + playerPet.imageDeath + ">");
+
+				// $("#pet-img").css("backgroundImage", "url('" + playerPet.imageDeath + "') -500px 0");
+				// $("#pet-img").css("backgroundPosition", "-500px");
+				var tl = new TimelineMax();
+				tl.to("#pet-img", 0, {backgroundPosition: "-250px"});
+				tl.to("#pet-img", 0, {backgroundPosition: "-500px"}, "+=0.5");
+				tl.to("#pet-img", 0, {backgroundPosition: "-750px"}, "+=0.5");
+				setTimeout(function() {
+					$(".pet-img").css("backgroundImage", "none");
+					setTimeout(function () {
+						monsterEscape();
+					}, 300);
+				}, 1500);
+			}
+			else {
+				$(".pet-health").find(".health-nums").append("<p>" + playerPet.currentHealth + "/" + playerPet.maxHealth + "</p>");
+				var healthLeft = (playerPet.currentHealth/playerPet.maxHealth) * 100;
+				$(".pet-health").find(".health").css("width", healthLeft + "%");
+			}
 
 
 			// Enable buttons for attacking monster

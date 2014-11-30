@@ -1,4 +1,4 @@
-// Monsters/evils in world
+// General monster constructor
 var Monster = function(health, strength, defense, speed, location, creates) {
 	this.health = health || 300;			// number
 	this.strength = strength || 20;			// number

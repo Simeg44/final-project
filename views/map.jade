@@ -90,7 +90,7 @@ block content
 							.health-container
 								.health
 					.pet.col-lg-3.col-md-2.col-xs-offset-6.col-sm-5
-						.pet-img
+						.pet-img#pet-img
 						.pet-health
 							.health-nums
 								p
@@ -114,6 +114,16 @@ block content
 				.victory-data
 				.victory-dismiss
 					button.btn.btn-default#victory-btn Close
+
+		.modal.fade.defeated#defeated(tabindex="-1" role="dialog" aria-labelledby="defeated" aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					.modal-header
+						h4 Aspect drained!
+					.modal-body
+						p You cannot battle your enemies until your inner Aspect has recovered. Please return home or use a healing item.
+					.modal-footer
+						button.btn.btn-default(type="button" data-dismiss="modal") Okay...
 
 
 block scripts
