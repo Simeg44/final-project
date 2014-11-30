@@ -33,11 +33,18 @@ var indexController = {
 			name: req.body.name, 
 			level: 1, 
 			alignment: req.body.alignment, 
-			pet: {
+		})
+		if (req.body.alignment === "good")	
+			newPlayer.pet = {
+				name: "sophrosyne",
+				level: 1
+			}
+		else {
+			newPlayer.pet = {
 				name: "pistis",
 				level: 1
 			}
-		})
+		}
 		
 		newPlayer.save(function(err, playerResults) {
 			console.log("playerResults", playerResults);

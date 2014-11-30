@@ -587,11 +587,8 @@ Monster.prototype.attack = function() {
 				var vanish = new Audio("/Sounds/pet-death.wav");
 				vanish.play();
 				console.log(vanish);
-				// $(".pet-img").empty();
-				// $(".pet-img").append("<img src=" + playerPet.imageDeath + ">");
-
-				// $("#pet-img").css("backgroundImage", "url('" + playerPet.imageDeath + "') -500px 0");
-				// $("#pet-img").css("backgroundPosition", "-500px");
+				
+				// Cycles through sprite sheet to create "death" animation
 				var tl = new TimelineMax();
 				tl.to("#pet-img", 0, {backgroundPosition: "-250px"});
 				tl.to("#pet-img", 0, {backgroundPosition: "-500px"}, "+=0.5");

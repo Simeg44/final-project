@@ -41,7 +41,7 @@ var Pistis = function(name, level, currentHealth, maxHealth, strength, speed) {
 	this.strength = strength || 100;
 	this.speed = speed || 200;
 	this.image = "/Images/pets/pet.png";
-	this.imageBack = "/Images/pets/pet.png";
+	this.imageBack = "/Images/pets/pistis.png";
 }
 Pistis.prototype = new Blessing();
 Pistis.prototype.constructor = Pistis;
