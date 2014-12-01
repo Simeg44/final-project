@@ -591,14 +591,14 @@ Monster.prototype.attack = function() {
 				// Cycles through sprite sheet to create "death" animation
 				var tl = new TimelineMax();
 				tl.to("#pet-img", 0, {backgroundPosition: "-250px"});
-				tl.to("#pet-img", 0, {backgroundPosition: "-500px"}, "+=0.5");
-				tl.to("#pet-img", 0, {backgroundPosition: "-750px"}, "+=0.5");
+				tl.to("#pet-img", 0, {backgroundPosition: "-500px"}, "+=0.4");
+				tl.to("#pet-img", 0, {backgroundPosition: "-750px"}, "+=0.4");
 				setTimeout(function() {
 					$(".pet-img").css("backgroundImage", "none");
 					setTimeout(function () {
 						monsterEscape();
-					}, 300);
-				}, 1500);
+					}, 200);
+				}, 1200);
 			}
 			else {
 				$(".pet-health").find(".health-nums").append("<p>" + playerPet.currentHealth + "/" + playerPet.maxHealth + "</p>");
