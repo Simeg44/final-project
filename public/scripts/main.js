@@ -269,6 +269,14 @@ function killMonster() {
 	socketio.emit("refreshLevels"); 
 	console.log("refresh");
 
+	// Add monster to known monsters array once defeated
+	// if previously unknown
+	if (!currentMonster.known) {
+		playerData.knownMonsters.push(currentMonster.monster.name);
+		socketio.emit("discovered", {id: playerData._id, monster: currentMonster.monster.name});
+		console.log("update known monsters:", currentMonster.monster.name);
+	}
+
 	victoryScreen();
 
 	setTimeout(function() {

@@ -7,10 +7,13 @@ Coding:
     ✔ updates map when moster defeated @done (14-11-10 19:20)
     ✔ have database create a monster everytime one is destroyed @done (14-11-11 20:03)
   ☐ Make sure there are monsters around player when they load game
-  ☐ Add monsters to known array after killing them
-  ☐ Have consequences when health reaches 0
+  ✔ Add monsters to known array after killing them @done (14-11-30 17:57)
+  ☐ Dying
+    ☐ Have consequense for letting health reach 0
+    ✔ Player can die and is then unable to enter battle until healed @done (14-11-30 17:57)
   ☐ Have level up system
   ☐ Increase complexity of combat system
+    ☐ defend
   ✔ Add percentage numbers to world g vs e bars @done (14-11-27 12:44)
     ✔ make bars glow @done (14-11-12 15:50)
   ✔ Have home base - replenishes health @done (14-11-12 15:50)

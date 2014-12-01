@@ -38,11 +38,31 @@ Monster.find({}, function (err, results) {
 		console.log("seeding monsters");
 
 		// seed Boulder monsters
-		for (var i = 0; i < 40; i ++) {
+		for (var i = 0; i < 50; i ++) {
 
 			var monster = new Monster({
 				breed: _.sample(breeds),
 				location: randomCoor(40.024603, -105.254139, 103166)
+			});
+			monster.save();
+		}
+
+		// seed Lafayette monsters
+		for (var i = 0; i < 30; i ++) {
+
+			var monster = new Monster({
+				breed: _.sample(breeds),
+				location: randomCoor(39.995619, -105.091319, 26784)
+			});
+			monster.save();
+		}
+
+		// seed Longmont monsters
+		for (var i = 0; i < 38; i ++) {
+
+			var monster = new Monster({
+				breed: _.sample(breeds),
+				location: randomCoor(40.178335, -105.102477, 89919)
 			});
 			monster.save();
 		}

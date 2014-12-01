@@ -60,6 +60,7 @@ socketio.on("connection", function(socket) {
 	// Update player/pet in database
 	socket.on("updateHealth", controller.updateHealth);
 	socket.on("setHome", controller.setHome);
+	socket.on("discovered", controller.discovered);
 })
 
 var port = process.env.PORT || 6591;

@@ -120,6 +120,15 @@ module.exports = function(socketio, socket) {
 				results.save();
 				console.log("home set", results);
 			})
+		},
+
+		// Add newly defeated monster to known monsters array
+		discovered: function (data) {
+			Player.findOne({_id: data.id}, function (err, results) {
+				results.knownMonsters.push(data.monster);
+				results.save();
+				console.log("new array:", results.knownMonsters);
+			})
 		}
 	};
 

@@ -14,7 +14,8 @@ var Player = mongoose.Schema({
 	home: {
 		lat: Number,
 		lng: Number
-	}
+	},
+	inventory: [String]
 });
 
 module.exports = mongoose.model("player", Player);
